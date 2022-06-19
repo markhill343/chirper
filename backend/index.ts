@@ -5,8 +5,8 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 
 //to do create the models
-const user =
-const message =
+const user = require('./models/user')
+const chrip = require('./models/chirp')
 
 const port = process.env.PORT || 3000
 const MongoDB_URI = process.env.MONGODB_URI || 'mongodb://localhost/chriper'
