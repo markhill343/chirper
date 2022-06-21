@@ -3,10 +3,11 @@ const app = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const Schema = require('mongoose').Schema;
 
 //to do create the models
-const user = require('./models/user')
-const chrip = require('./models/chirp')
+user = require('./models/user')
+chirp = require('./models/chirp')
 
 const port = process.env.PORT || 3000
 const MongoDB_URI = process.env.MONGODB_URI || 'mongodb://localhost/chriper'
