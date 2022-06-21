@@ -6,8 +6,8 @@ const mongoose = require('mongoose')
 const Schema = require('mongoose').Schema;
 
 //to do create the models
-user = require('./models/user')
-chirp = require('./models/chirp')
+const user = require('./models/user')
+const chirp = require('./models/chirp')
 
 const port = process.env.PORT || 3000
 const MongoDB_URI = process.env.MONGODB_URI || 'mongodb://localhost/chriper'
@@ -54,9 +54,42 @@ app.post('/api/login', (req, res) => {
 
 
 //register function
+app.post('api/register', (req, res) => {
+    console.log('register request')
+    console.log(req.body)
+    user.countDocuments({username:req.body.username}, (err, count) => {
+        if (err) 
+            console.log(err)
+
+            if(count === 0){
+                user.create({
+                    name: req.body.name,
+                    username: req.body.username,
+                    password: req.body.password,
+                }).then(newUser => {
+                    console.log(`newUser created: ${newUser}`)
+                    res.send(newUser)
+                })
+                .catch(err => {throw err})
+            } else {
+                res.send(false)
+        }
+    })
+})
 
 
 //get users
+app.post('/api/users', (req, res) => {
+    console.log('get users request')
+    console.log(req.body)
+    user.findOne({username:req.body.username}, (err, user) => {
+        if (err) {
+            console.log(err)
+            res.status(500).send(err)
+        }
+        res.send(user)
+    })
+})
 
 //new tweet
 

@@ -12,6 +12,6 @@ const userSchema = new Schema({
     chrips: [{ type: Schema.Types.ObjectId, ref: 'chirp' }],
 });
 
-var user = mongoose.model('user', userSchema);
+var user1 = mongoose.model('user', userSchema);
 
 module.exports = user;

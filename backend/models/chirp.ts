@@ -8,6 +8,6 @@ const chirpSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'user' },
 });
 
-var chirp = mongoose.model('chirp', chirpSchema);
+var chirp1 = mongoose.model('chirp', chirpSchema);
 
 module.exports = chirp;
