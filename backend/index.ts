@@ -24,4 +24,39 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
-//Backend starts here
+//Backend function start here
+
+//login function
+app.post('/api/login', (req, res) => {
+    console.log('login request')
+    console.log(req.body)
+    user.findOne({ 
+        $and: [
+            {$or: [
+                {mail:req.body.usernameOrEmail}, {username:req.body.usernameOrEmail}
+            ]},
+            {password:req.body.password}
+        ]
+    }, (err, user) => {
+        if (err) {
+            console.log(err)
+            res.status(500).send(err)
+        } else {
+            if (user) {
+                console.log(user)
+                res.status(200).send(user)
+            } else {
+                res.status(404).send('User not found')
+            }
+        }
+    })
+})
+
+
+//register function
+
+
+//get users
+
+//new tweet
+
