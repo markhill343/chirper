@@ -91,5 +91,26 @@ app.post('/api/users', (req, res) => {
     })
 })
 
-//new tweet
+//new chirp
+app.post('/api/newchirp', async (req,res) => {
+    await chirp
+        .create(req.body.cirpContent)
+        .then(async (newChirp) => {
+            await user
+            .findOne({username:req.body.username}, async (err, currentUser) => {
+                if (err) {console.log(err)}
+                await currentUser.chrips.push(newChirp._id)
+                await currentUser.save()
+                await chirp
+                    .findOne({_id:newChirp._id})
+                    .populate('author')
+                    .exec(async (err, result) => {
+                        if (err) throw err
+                        await console.log(result)
+                        await res.send(result)
+                    })
+               })
+        })
+        .catch(err => {throw err})
+})
 
