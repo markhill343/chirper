@@ -10,18 +10,21 @@ const user = require("./models/user");
 const chirp = require("./models/chirp");
 
 const port = process.env.PORT || 3000;
-const MongoDB_URI = process.env.MONGODB_URI || "mongodb://localhost/chriper";
+const MongoDB_URI = process.env.MONGODB_URI || "mongodb://mongo:db:27017/chriper";
 
 // Connecting to the database
 mongoose.connect(
   MongoDB_URI,
   {
     useNewUrlParser: true,
-  },
-  () => {
-    console.log("Connected to ChirperDB");
-  }
-);
+  });
+
+//get errors on the console
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("Connected to ChirperDB");
+})
 
 // Define cors and body parser
 app.use(bodyParser.json());
