@@ -1,9 +1,6 @@
-//declare model user
-export {};
+import mongoose from "mongoose";
 
-const mongoose = require('mongoose');
-
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
   name: String,
   username: String,
   password: String,
@@ -14,9 +11,7 @@ const userSchema = new mongoose.Schema({
   joinedDate: { type: Date, default: Date.now },
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
-  chrips: [{ type: mongoose.Schema.Types.ObjectId, ref: "chirp" }],
+  chirps: [{ type: mongoose.Schema.Types.ObjectId, ref: "chirp" }],
 });
 
-const user1 = mongoose.model("user", userSchema);
-
-module.exports = user1;
+export const user = mongoose.model("user", userSchema);

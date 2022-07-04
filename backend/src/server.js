@@ -1,30 +1,31 @@
 // Set constants for the application
-const app = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const Schema = require("mongoose").Schema;
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import mongoose from "mongoose";
 
 //to do create the models
-const user = require("./models/user");
-const chirp = require("./models/chirp");
+import { user } from "./models/user.js";
+import { chirp } from "./models/chirp.js";
 
-const port = process.env.PORT || 3000;
-const MongoDB_URI = process.env.MONGODB_URI || "mongodb://mongo:db:27017/chriper";
+const app = express();
+
+console.log("Connecting to MongoDB...");
 
 // Connecting to the database
-mongoose.connect(
-  MongoDB_URI,
-  {
-    useNewUrlParser: true,
-  });
+mongoose.connect("mongodb://127.0.0.1:27017/chirper", {
+  authSource: "admin",
+  useNewUrlParser: true,
+  user: "admin",
+  pass: "markistdoof",
+});
 
 //get errors on the console
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log("Connected to ChirperDB");
-})
+});
 
 // Define cors and body parser
 app.use(bodyParser.json());

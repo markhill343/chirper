@@ -1,7 +1,4 @@
-//declare model chirp
-export {};
-
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const chirpSchema = new mongoose.Schema({
   text: String,
@@ -11,6 +8,4 @@ const chirpSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
 });
 
-const chirp1 = mongoose.model("chirp", chirpSchema);
-
-module.exports = chirp1;
+export const chirp = mongoose.model("chirp", chirpSchema);
