@@ -10,7 +10,7 @@ import { chirp } from "./models/chirp.js";
 
 const app = express();
 
-console.log("Connecting to MongoDB...");
+console.log("Connecting to ChirperDB...");
 
 // Connecting to the database
 mongoose.connect("mongodb://127.0.0.1:27017/chirper", {
