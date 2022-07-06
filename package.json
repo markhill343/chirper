@@ -12,7 +12,6 @@
     "start": "nodemon ./bin/www",
     "server": "nodemon -r  src/serwer.ts",
     "server1": "nodemon -r dotenv/config src/server.ts"
-
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -23,6 +22,7 @@
     "express": "^4.18.1",
     "mongoose": "^6.4.0",
     "nodemon": "^2.0.18",
+    "pinia": "^2.0.14",
     "sass-loader": "^13.0.0",
     "ts-node": "^10.8.1",
     "vue": "^3.2.36",

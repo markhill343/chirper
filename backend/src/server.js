@@ -70,6 +70,22 @@ app.post("/api/login", (req, res) => {
 app.post("api/register", (req, res) => {
   console.log("register request");
   console.log(req.body);
+
+  /*
+  //alternativ registration
+  const testUser = new user({
+    name: "Peter",
+    username: "peterlustig",
+    password: "peterspassword",
+    mail: "peterlustig@gmail.com",
+    bio: "ich bins d'a peter",
+  });
+  testUser.save(function (err) {
+    if (err) return console.error(err);
+  });
+
+  */
+
   user.countDocuments({ username: req.body.username }, (err, count) => {
     if (err) console.log(err);
 
