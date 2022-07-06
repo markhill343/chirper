@@ -4,8 +4,8 @@
   </div>
 </template>
 
-<script>
-import MyContainer from "../components/MyContainer.vue";
+<script setup lang="ts">
+import MyContainer from "./components/MyContainer.vue";
 </script>
 
 <style>
