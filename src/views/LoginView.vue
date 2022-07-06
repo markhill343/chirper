@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import MyContainer from "./components/MyContainer.vue";
+import MyContainer from "../components/MyContainer.vue";
 </script>
 
 <style>
