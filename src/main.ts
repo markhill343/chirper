@@ -1,13 +1,21 @@
+import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";
+import ConfigStore from "./store/StoreConfig";
+import Router from "./router";
+import getJson from "./service/getJson";
 
-const app = createApp(App);
+const pinia = createPinia(),
+  app = createApp(App);
 
-app.use(router);
+const init = async () => {
+  const configStore = ConfigStore(pinia);
+  configStore.reset(await getJson("/json/config.json"));
 
-app.mount("#app");
+  app.use(pinia).use(Router()).mount("#app");
+};
 
+init();
 /*
 import Vue from "vue";
 import Vuex from "vuex";

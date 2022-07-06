@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import Router from "../router";
+import StoreSession from "../store/StoreSession";
+import StoreUser from "../store/StoreUser";
+
+const router = Router(),
+  storeSession = StoreSession(),
+  session = storeSession.session,
+  storeUser = StoreUser(),
+  user = storeUser.user,
+  doRegister = async () => {
+    const doit = async () => {
+      const success = await storeUser.register();
+      if (success) {
+        router.push("/");
+      }
+    };
+    await doit();
+  };
+</script>
+
 <template>
   <form>
     <ul>
@@ -7,13 +28,9 @@
       <li><input type="password" id="Password" placeholder="Password" /></li>
     </ul>
 
-    <button>Sign Up</button>
+    <Button label="register" @click="doRegister">Sign Up</Button>
   </form>
 </template>
-
-<script lang="ts">
-export default {};
-</script>
 
 <style scoped>
 ul {
