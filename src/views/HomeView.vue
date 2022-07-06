@@ -1,12 +1,11 @@
-<script>
+<script lang="ts">
 import TheWelcome from "@/components/TheWelcome.vue";
 import MyContainer from "../components/MyContainer.vue";
+
+export default { name: "HomeView", components: { MyContainer } };
 </script>
 
 <template>
-  <div class="home">
-    <MyContainer />
-  </div>
+  <div class="home"></div>
+  <my-Container />
 </template>
-
-export default { name: 'Home', components: { MyContainer, } }
