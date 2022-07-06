@@ -1,9 +1,12 @@
-<script setup lang="ts">
+<script>
 import TheWelcome from "@/components/TheWelcome.vue";
+import MyContainer from "../components/MyContainer.vue";
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="home">
+    <MyContainer />
+  </div>
 </template>
+
+export default { name: 'Home', components: { MyContainer, } }
