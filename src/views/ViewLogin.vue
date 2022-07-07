@@ -4,9 +4,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import MyContainer from "../components/MyContainer.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style>
 @media (min-width: 1024px) {

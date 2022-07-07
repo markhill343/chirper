@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted } from "vue";
 import { v4 as uuid } from "uuid";
-import ControllerKey from "../controller/ControllerKey";
+import ControllerKey from "../../controller/ControllerKey";
 
 const props = defineProps({
     label: { type: String, default: "" },
