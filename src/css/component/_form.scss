@@ -1,0 +1,29 @@
+@import 'config';
+ 
+form
+{ input, button
+  { font-size:   $font-size-small; 
+    font-family: $font-family-sans;
+  }
+  
+  div 
+  { position: relative; 
+    margin-top: 1em;
+    label 
+    { font-size:   $font-size-small;
+      position:    absolute;
+      top:         0.90ex;
+      left:        0.20em;
+      user-select: none;
+      z-index:     1500;
+      opacity:     0.3;
+    }
+    input:focus + label,
+    input:not(:placeholder-shown) + label 
+    { color:    #111;
+      transform:  translate(0, -1.4em);
+      opacity:    0.7;
+      transition: all 0.2s ease-out; 
+    }
+  }
+}
