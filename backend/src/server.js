@@ -3,12 +3,16 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+import morgan from "morgan";
 
 //to do create the models
 import { user } from "./models/user.js";
 import { chirp } from "./models/chirp.js";
 
 const app = express();
+app.use(morgan("combined"));
+app.use(express.json());
+//app.listen(3000);
 
 console.log("Connecting to ChirperDB...");
 
@@ -33,6 +37,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 //Backend function start here
+
+app.get("/", function (req, res) {
+  res.send("hello, world!");
+});
 
 //login function
 app.post("/api/login", (req, res) => {
@@ -67,7 +75,7 @@ app.post("/api/login", (req, res) => {
 });
 
 //register function
-app.post("api/register", (req, res) => {
+app.post("/api/register", async (req, res) => {
   console.log("register request");
   console.log(req.body);
 

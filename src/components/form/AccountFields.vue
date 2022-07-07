@@ -8,8 +8,6 @@ import Checkbox from "./CheckBox.vue";
 
 const props = defineProps({
     account: { type: Object, default: {} },
-    isAdminDisabled: { type: Boolean, default: false },
-    isAdmin: { type: Boolean, default: false },
   }),
   storeSession = StoreSession(),
   session = storeSession.session,
@@ -30,9 +28,6 @@ const props = defineProps({
   ),
   errorPassword = computed(() =>
     session.errorMessage?.properties.includes("password")
-  ),
-  errorIsAdmin = computed(() =>
-    session.errorMessage?.properties.includes("isAdmin")
   );
 </script>
 
@@ -45,15 +40,9 @@ const props = defineProps({
     autofocus
   />
   <Textfield
-    label="E-Mail"
-    v-model:text="account.email"
-    :error="errorEmail"
-    @enter="enter"
-  />
-  <Textfield
     label="Benutzername"
-    v-model:text="account.user"
-    :error="errorUser"
+    v-model:text="account.username"
+    :error="errorEmail"
     @enter="enter"
   />
   <Textfield
@@ -62,11 +51,10 @@ const props = defineProps({
     :error="errorPassword"
     @enter="enter"
   />
-  <Checkbox
-    v-if="isAdmin"
-    label="ist Admin"
-    v-model:checked="account.isAdmin"
-    :disabled="isAdminDisabled"
-    :error="errorIsAdmin"
+  <Textfield
+    label="Email"
+    v-model:text="account.mail"
+    :error="errorUser"
+    @enter="enter"
   />
 </template>
