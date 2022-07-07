@@ -1,10 +1,12 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "backend/**/*", "backend/**/*.ts"],
+  "include": ["env.d.ts", "src/**/*.vue", "backend/**/*", "backend/**/*.ts", "src/**/**/*.vue"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./*"
+       ]
     },
     "types":["node"],
     "typeRoots": [ "../node_modules/@types" ]

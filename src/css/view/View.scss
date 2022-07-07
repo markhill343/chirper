@@ -1,0 +1,21 @@
+@import '../config';
+ 
+.router-link-exact-active, .router-link-active
+{ text-decoration: underline;
+  color:           $link-color;
+  font-weight:     bold;
+}
+
+.message
+{ padding-top: 1em;
+}
+
+.error
+{ color:          $error-color;
+  padding-top:    0.5em;
+  padding-bottom: 0.5em;
+}
+
+.error:empty
+{ display:none; 
+}

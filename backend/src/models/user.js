@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+//Create Schema
 export const userSchema = new mongoose.Schema({
   name: String,
   username: String,
@@ -8,10 +9,13 @@ export const userSchema = new mongoose.Schema({
   bio: String,
   location: String,
   profilImage: String,
+  /*
   joinedDate: { type: Date, default: Date.now },
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   chirps: [{ type: mongoose.Schema.Types.ObjectId, ref: "chirp" }],
+  */
 });
 
+//Compile model from schema
 export const user = mongoose.model("user", userSchema);
