@@ -29,5 +29,5 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-@import "../../css/component/Checkbox.scss";
+@import "../../css/component/CheckBox.scss";
 </style>

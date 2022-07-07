@@ -10,12 +10,14 @@ const pinia = createPinia(),
 
 const init = async () => {
   const configStore = ConfigStore(pinia);
-  configStore.reset(await getJson("/json/config.json"));
+  //configStore.reset(await getJson("./json/config.json"));
 
   app.use(pinia).use(Router()).mount("#app");
 };
 
 init();
+
+//Unused Code fragments
 /*
 import Vue from "vue";
 import Vuex from "vuex";

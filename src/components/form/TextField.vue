@@ -41,5 +41,5 @@ onUnmounted(() => controllerKey.remove());
 </template>
 
 <style scoped lang="scss">
-@import "/css/component/Textfield.scss";
+@import "../../css/component/Textfield.scss";
 </style>
