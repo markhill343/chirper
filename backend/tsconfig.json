@@ -1,6 +1,8 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "backend/**/*", "backend/**/*.ts"],
+  "console": "internalConsole", 
+  "outputCapture": "std",
   "compilerOptions": {
     "baseUrl": ".",
     "isolatedModules": false,

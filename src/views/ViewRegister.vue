@@ -1,4 +1,11 @@
 <script setup lang="ts">
+/*
+ * @Author: Wolfgang Kowarschick <kowa@hs-augsburg.de>
+ * @Author: Markus Hillreiner <markus.hillreiner@hs-augsburg.de>
+ * @copyirght: 2016-2022 Wolfgang Kowarschick
+ * @license: MIT
+ */
+
 import { computed } from "vue";
 
 import AccountFields from "../components/form/AccountFields.vue";
@@ -7,6 +14,14 @@ import Button from "../components/form/BButton.vue";
 import Router from "../router";
 import StoreSession from "../store/StoreSession";
 import StoreUser from "../store/StoreUser";
+import axios from "axios";
+import express from "express";
+
+const app = express();
+
+app.post("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 const router = Router(),
   storeSession = StoreSession(),

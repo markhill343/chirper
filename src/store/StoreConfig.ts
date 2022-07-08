@@ -1,3 +1,9 @@
+/*
+ * @Author: Wolfgang Kowarschick <kowa@hs-augsburg.de>
+ * @copyirght: 2016-2022 Wolfgang Kowarschick
+ * @license: MIT
+ */
+
 import { defineStore } from "pinia";
 import { reactive, readonly } from "vue";
 
@@ -18,3 +24,8 @@ const StoreConfig = defineStore(
 );
 
 export default StoreConfig;
+/*
+ * @Author: Wolfgang Kowarschick <kowa@hs-augsburg.de>
+ * @copyirght: 2016-2022 Wolfgang Kowarschick
+ * @license: MIT
+ */

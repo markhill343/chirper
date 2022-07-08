@@ -1,3 +1,9 @@
+/*
+ * @Author: Wolfgang Kowarschick <kowa@hs-augsburg.de>
+ * @copyirght: 2016-2022 Wolfgang Kowarschick
+ * @license: MIT
+ */
+
 import { defineStore } from "pinia";
 import { reactive, computed } from "vue";
 
@@ -9,6 +15,8 @@ import StoreConfig from "../store/StoreConfig";
 import StoreSession from "../store/StoreSession";
 
 import jwt_decode from "jwt-decode";
+
+import { getJson, postJson, patchJson, deleteJson } from "../service/rest";
 
 const StoreUser = defineStore(
   "user",
@@ -29,9 +37,9 @@ const StoreUser = defineStore(
         const res = await postJson(null, paths.register, user);
         saveSessionInfo(res);
 
-        if (res.status === 201) {
-          return login();
-        }
+        //if (res.status === 201) {
+        //  return login();
+        //}
 
         return res.status < 300;
       };
