@@ -26,7 +26,10 @@ const StoreUser = defineStore(
         Object.assign(user, defaultAccount());
       },
       register = async () => {
-        const res = await postJson(null, paths.register, user);
+        const response = await fetch("http://localhost:8080/register", {
+          methode: "POST",
+          body: JSON.stringify(user),
+        });
         saveSessionInfo(res);
 
         if (res.status === 201) {

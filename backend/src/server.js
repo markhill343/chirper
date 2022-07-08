@@ -9,10 +9,12 @@ import morgan from "morgan";
 import { user } from "./models/user.js";
 import { chirp } from "./models/chirp.js";
 
-const app = express();
+const PORT = 8080,
+  SERVER = `localhost:${PORT}`,
+  app = express();
+
 app.use(morgan("combined"));
 app.use(express.json());
-//app.listen(3000);
 
 console.log("Connecting to ChirperDB...");
 
@@ -75,15 +77,14 @@ app.post("/api/login", (req, res) => {
 });
 
 //register function
-app.post("/api/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   console.log("register request");
   console.log(req.body);
 
-  /*
   //alternativ registration
   const testUser = new user({
-    name: "Peter",
-    username: "peterlustig",
+    name: "Peter123",
+    username: "peterlustig123",
     password: "peterspassword",
     mail: "peterlustig@gmail.com",
     bio: "ich bins d'a peter",
@@ -91,8 +92,6 @@ app.post("/api/register", async (req, res) => {
   testUser.save(function (err) {
     if (err) return console.error(err);
   });
-
-  */
 
   user.countDocuments({ username: req.body.username }, (err, count) => {
     if (err) console.log(err);
@@ -158,3 +157,6 @@ app.post("/api/newchirp", async (req, res) => {
       throw err;
     });
 });
+
+app.listen(PORT);
+console.log(`Running on ${SERVER}`);

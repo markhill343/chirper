@@ -23,14 +23,21 @@ const router = Router(),
     };
     await doit();
   };
+
+const register = async () => {
+  const response = await fetch("http://localhost:8080/register", {
+    method: "POST",
+    body: JSON.stringify(user),
+  });
+};
 </script>
 
 <template>
   <h1>Registrieren</h1>
   <form>
-    <AccountFields :account="user" @enter="doRegister" />
+    <AccountFields :account="user" @enter="register" />
     <div>
-      <Button label="Registrieren" @click="doRegister" />
+      <Button label="Registrieren" @click="register" />
     </div>
     <div>{{ errorMessage }}</div>
   </form>
