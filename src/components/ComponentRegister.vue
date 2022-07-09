@@ -1,22 +1,29 @@
 <script setup lang="ts">
-import Router from "../router";
-import StoreSession from "../store/StoreSession";
-import StoreUser from "../store/StoreUser";
+const register = async (data: {
+  name: HTMLInputElement;
+  username: HTMLInputElement;
+  mail: HTMLInputElement;
+  password: HTMLInputElement;
+}) => {
+  const response = await fetch("http://localhost:8080/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+};
 
-const router = Router(),
-  storeSession = StoreSession(),
-  session = storeSession.session,
-  storeUser = StoreUser(),
-  user = storeUser.user,
-  doRegister = async () => {
-    const doit = async () => {
-      const success = await storeUser.register();
-      if (success) {
-        router.push("/");
-      }
-    };
-    await doit();
-  };
+const register2 = () => {
+  console.log("works");
+  console.log(document.getElementById("namee") as HTMLInputElement);
+  const name = document.getElementById("namee") as HTMLInputElement,
+    username = document.getElementById("Username") as HTMLInputElement,
+    mail = document.getElementById("Email") as HTMLInputElement,
+    password = document.getElementById("Password") as HTMLInputElement,
+    data = { name, username, mail, password };
+  register(data);
+};
 </script>
 
 <template>
@@ -26,9 +33,8 @@ const router = Router(),
       <li><input type="username" id="Username" placeholder="Username" /></li>
       <li><input type="email" id="Email" placeholder="Email" /></li>
       <li><input type="password" id="Password" placeholder="Password" /></li>
+      <button type="submit" id="register" @click="register2">Register</button>
     </ul>
-
-    <Button label="register" @click="doRegister">Sign Up</Button>
   </form>
 </template>
 

@@ -81,17 +81,7 @@ app.post("/register", async (req, res) => {
   console.log("register request");
   console.log(req.body);
 
-  //alternativ registration
-  const testUser = new user({
-    name: "Peter123",
-    username: "peterlustig123",
-    password: "peterspassword",
-    mail: "peterlustig@gmail.com",
-    bio: "ich bins d'a peter",
-  });
-  testUser.save(function (err) {
-    if (err) return console.error(err);
-  });
+  //const user = JSON.parse(req.body);
 
   user.countDocuments({ username: req.body.username }, (err, count) => {
     if (err) console.log(err);
