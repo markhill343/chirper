@@ -3,7 +3,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-import morgan from "morgan";
 
 //to do create the models
 import { user } from "./models/user.js";
@@ -13,12 +12,8 @@ const PORT = 8080,
   SERVER = `localhost:${PORT}`,
   app = express();
 
-app.use(morgan("combined"));
-app.use(express.json());
-
-console.log("Connecting to ChirperDB...");
-
 // Connecting to the database
+console.log("Connecting to ChirperDB...");
 mongoose.connect("mongodb://127.0.0.1:27017/chirper", {
   authSource: "admin",
   useNewUrlParser: true,
@@ -38,8 +33,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-//Backend function start here
+//Backend functions start here
 
+//Home function
 app.get("/", function (req, res) {
   res.send("hello, world!");
 });
@@ -85,31 +81,6 @@ app.post("/register", async (req, res) => {
   newUser.save(function (err) {
     if (err) return console.error(err);
   });
-
-  /*
-
-  user.countDocuments({ username: req.body.Username._value }, (err, count) => {
-    if (err) console.log(err);
-
-    if (count === 0) {
-      user
-        .create({
-          name: req.body.name_value,
-          username: req.body.username_value,
-          password: req.body.password_value,
-        })
-        .then((newUser) => {
-          console.log(`newUser created: ${newUser}`);
-          res.send(newUser);
-        })
-        .catch((err) => {
-          throw err;
-        });
-    } else {
-      res.send(false);
-    }
-  });
-  */
 });
 
 //get users
