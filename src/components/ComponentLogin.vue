@@ -10,6 +10,11 @@ const router = Router(),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status === 200) {
+        console.log("Login success");
+        router.push("/");
+      }
     });
   };
 
@@ -17,11 +22,10 @@ const Username = ref(""),
   Password = ref(""),
   data = { Username, Password };
 
-const doLogin = () => {
+const doLogin = async () => {
   console.log(Username.value);
   console.log(Password.value);
   login(data);
-  router.push("/");
 };
 </script>
 
