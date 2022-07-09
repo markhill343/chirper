@@ -45,7 +45,7 @@ app.get("/", function (req, res) {
 });
 
 //login function
-app.post("/api/login", (req, res) => {
+app.post("/login", (req, res) => {
   console.log("login request");
   console.log(req.body);
   user.findOne(

@@ -24,16 +24,9 @@ const router = Router(),
       </li>
       <li :class="storeUser">
         <router-link
-          to="/login"
-          :class="{ 'router-link-active': isActive('/login') }"
-          >Login</router-link
-        >
-      </li>
-      <li :class="storeUser">
-        <router-link
           to="/register"
           :class="{ 'router-link-active': isActive('/register') }"
-          >Registrieren</router-link
+          >Login</router-link
         >
       </li>
     </ul>
