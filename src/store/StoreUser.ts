@@ -24,19 +24,9 @@ const StoreUser = defineStore(
       reset = () => {
         storeSession.reset();
         Object.assign(user, defaultAccount());
-      },
-      register = async () => {
-        const res = await postJson(null, paths.register, user);
-        saveSessionInfo(res);
-
-        if (res.status === 201) {
-          return login();
-        }
-
-        return res.status < 300;
       };
 
-    return { user, register, reset };
+    return user;
   }
 );
 

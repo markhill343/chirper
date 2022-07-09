@@ -1,34 +1,47 @@
 <script setup lang="ts">
-import Router from "../router";
-import StoreSession from "../store/StoreSession";
-import StoreUser from "../store/StoreUser";
+import { ref, type Ref } from "vue";
+const register = async (data: {
+  Name: Ref<string>;
+  Username: Ref<string>;
+  Email: Ref<string>;
+  Password: Ref<string>;
+}) => {
+  const response = await fetch("http://localhost:8080/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+};
 
-const router = Router(),
-  storeSession = StoreSession(),
-  session = storeSession.session,
-  storeUser = StoreUser(),
-  user = storeUser.user,
-  doRegister = async () => {
-    const doit = async () => {
-      const success = await storeUser.register();
-      if (success) {
-        router.push("/");
-      }
-    };
-    await doit();
-  };
+const Name = ref(""),
+  Username = ref(""),
+  Email = ref(""),
+  Password = ref(""),
+  data = { Name, Username, Email, Password };
+
+const doRegister = () => {
+  console.log("works");
+  console.log(Name.value);
+  console.log(Username.value);
+  console.log(Email.value);
+  console.log(Password.value);
+  register(data);
+};
 </script>
 
 <template>
   <form>
     <ul>
-      <li><input type="text" id="Name" placeholder="Name" /></li>
-      <li><input type="username" id="Username" placeholder="Username" /></li>
-      <li><input type="email" id="Email" placeholder="Email" /></li>
-      <li><input type="password" id="Password" placeholder="Password" /></li>
+      <li><input v-model="Name" placeholder="Name" /></li>
+      <li><input v-model="Username" placeholder="Username" /></li>
+      <li><input v-model="Email" placeholder="Email" /></li>
+      <li>
+        <input v-model="Password" placeholder="Password" />
+      </li>
+      <button type="submit" id="register" @click="doRegister">Register</button>
     </ul>
-
-    <Button label="register" @click="doRegister">Sign Up</Button>
   </form>
 </template>
 

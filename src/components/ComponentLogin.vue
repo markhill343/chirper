@@ -4,8 +4,6 @@
       <li><input type="username" id="Username" placeholder="Username" /></li>
       <li><input type="password" id="Password" placeholder="Password" /></li>
     </ul>
-
-    <button>Login</button>
   </form>
 </template>
 

@@ -9,10 +9,12 @@ import morgan from "morgan";
 import { user } from "./models/user.js";
 import { chirp } from "./models/chirp.js";
 
-const app = express();
+const PORT = 8080,
+  SERVER = `localhost:${PORT}`,
+  app = express();
+
 app.use(morgan("combined"));
 app.use(express.json());
-//app.listen(3000);
 
 console.log("Connecting to ChirperDB...");
 
@@ -75,34 +77,32 @@ app.post("/api/login", (req, res) => {
 });
 
 //register function
-app.post("/api/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   console.log("register request");
-  console.log(req.body);
+  console.log(req.body.Name._value);
 
-  /*
-  //alternativ registration
-  const testUser = new user({
-    name: "Peter",
-    username: "peterlustig",
-    password: "peterspassword",
-    mail: "peterlustig@gmail.com",
-    bio: "ich bins d'a peter",
+  const newUser = new user({
+    name: req.body.Name._value,
+    username: req.body.Username._value,
+    password: req.body.Password._value,
+    mail: req.body.Email._value,
+    bio: "Generic Bio",
   });
-  testUser.save(function (err) {
+  newUser.save(function (err) {
     if (err) return console.error(err);
   });
 
-  */
+  /*
 
-  user.countDocuments({ username: req.body.username }, (err, count) => {
+  user.countDocuments({ username: req.body.Username._value }, (err, count) => {
     if (err) console.log(err);
 
     if (count === 0) {
       user
         .create({
-          name: req.body.name,
-          username: req.body.username,
-          password: req.body.password,
+          name: req.body.name_value,
+          username: req.body.username_value,
+          password: req.body.password_value,
         })
         .then((newUser) => {
           console.log(`newUser created: ${newUser}`);
@@ -115,6 +115,7 @@ app.post("/api/register", async (req, res) => {
       res.send(false);
     }
   });
+  */
 });
 
 //get users
@@ -158,3 +159,6 @@ app.post("/api/newchirp", async (req, res) => {
       throw err;
     });
 });
+
+app.listen(PORT);
+console.log(`Running on ${SERVER}`);
