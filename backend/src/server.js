@@ -79,19 +79,30 @@ app.post("/api/login", (req, res) => {
 //register function
 app.post("/register", async (req, res) => {
   console.log("register request");
-  console.log(req.body);
+  console.log(req.body.Name._value);
 
-  //const user = JSON.parse(req.body);
+  const newUser = new user({
+    name: req.body.Name._value,
+    username: req.body.Username._value,
+    password: req.body.Password._value,
+    mail: req.body.Email._value,
+    bio: "Generic Bio",
+  });
+  newUser.save(function (err) {
+    if (err) return console.error(err);
+  });
 
-  user.countDocuments({ username: req.body.username }, (err, count) => {
+  /*
+
+  user.countDocuments({ username: req.body.Username._value }, (err, count) => {
     if (err) console.log(err);
 
     if (count === 0) {
       user
         .create({
-          name: req.body.name,
-          username: req.body.username,
-          password: req.body.password,
+          name: req.body.name_value,
+          username: req.body.username_value,
+          password: req.body.password_value,
         })
         .then((newUser) => {
           console.log(`newUser created: ${newUser}`);
@@ -104,6 +115,7 @@ app.post("/register", async (req, res) => {
       res.send(false);
     }
   });
+  */
 });
 
 //get users
