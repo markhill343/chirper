@@ -45,35 +45,29 @@ app.get("/", function (req, res) {
 });
 
 //login function
-app.post("/api/login", (req, res) => {
+app.post("/login", (req, res) => {
   console.log("login request");
-  console.log(req.body);
-  user.findOne(
-    {
-      $and: [
-        {
-          $or: [
-            { mail: req.body.usernameOrEmail },
-            { username: req.body.usernameOrEmail },
-          ],
-        },
-        { password: req.body.password },
-      ],
-    },
-    (err, user) => {
+  try {
+    user.findOne({ username: req.body.Username._value }, (err, user) => {
       if (err) {
         console.log(err);
-        res.status(500).send(err);
+        res.status(500).send("Error");
+      } else if (!user) {
+        console.log("User not found");
+        res.status(404).send("User not found");
       } else {
-        if (user) {
-          console.log(user);
-          res.status(200).send(user);
+        if (user.password === req.body.Password._value) {
+          console.log("User found");
+          res.status(200).send("User found");
         } else {
-          res.status(404).send("User not found");
+          console.log("Wrong password");
+          res.status(401).send("Wrong password");
         }
       }
-    }
-  );
+    });
+  } catch (error) {
+    return res.status(500).send("Error");
+  }
 });
 
 //register function
