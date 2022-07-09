@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { ref, type Ref } from "vue";
 const register = async (data: {
-  name: HTMLInputElement;
-  username: HTMLInputElement;
-  mail: HTMLInputElement;
-  password: HTMLInputElement;
+  Name: Ref<string>;
+  Username: Ref<string>;
+  Email: Ref<string>;
+  Password: Ref<string>;
 }) => {
   const response = await fetch("http://localhost:8080/register", {
     method: "POST",
@@ -14,14 +15,18 @@ const register = async (data: {
   });
 };
 
-const register2 = () => {
+const Name = ref(""),
+  Username = ref(""),
+  Email = ref(""),
+  Password = ref(""),
+  data = { Name, Username, Email, Password };
+
+const doRegister = () => {
   console.log("works");
-  console.log(document.getElementById("namee") as HTMLInputElement);
-  const name = document.getElementById("namee") as HTMLInputElement,
-    username = document.getElementById("Username") as HTMLInputElement,
-    mail = document.getElementById("Email") as HTMLInputElement,
-    password = document.getElementById("Password") as HTMLInputElement,
-    data = { name, username, mail, password };
+  console.log(Name.value);
+  console.log(Username.value);
+  console.log(Email.value);
+  console.log(Password.value);
   register(data);
 };
 </script>
@@ -29,11 +34,13 @@ const register2 = () => {
 <template>
   <form>
     <ul>
-      <li><input type="text" id="Name" placeholder="Name" /></li>
-      <li><input type="username" id="Username" placeholder="Username" /></li>
-      <li><input type="email" id="Email" placeholder="Email" /></li>
-      <li><input type="password" id="Password" placeholder="Password" /></li>
-      <button type="submit" id="register" @click="register2">Register</button>
+      <li><input v-model="Name" placeholder="Name" /></li>
+      <li><input v-model="Username" placeholder="Username" /></li>
+      <li><input v-model="Email" placeholder="Email" /></li>
+      <li>
+        <input v-model="Password" placeholder="Password" />
+      </li>
+      <button type="submit" id="register" @click="doRegister">Register</button>
     </ul>
   </form>
 </template>
