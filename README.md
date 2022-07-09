@@ -31,3 +31,12 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Run Backend Server
+
+cd Backend
+npm run Server
+
+### Setup Database Server
+
+docker-compose up
