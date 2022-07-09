@@ -61,17 +61,10 @@ app.post("/login", (req, res) => {
       ],
     },
     (err, user) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send(err);
-      } else {
-        if (user) {
-          console.log(user);
-          res.status(200).send(user);
-        } else {
-          res.status(404).send("User not found");
-        }
-      }
+      if (err) throw err;
+
+      console.log(`found user: ${user}`);
+      res.send({ foundUser: user });
     }
   );
 });
