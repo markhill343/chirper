@@ -1,8 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import ConfigStore from "./store/StoreConfig";
 import Router from "./router";
-import getJson from "./service/getJson";
 
 const app = createApp(App);
 

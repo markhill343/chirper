@@ -3,11 +3,6 @@ import { ref, type Ref } from "vue";
 import Router from "../router";
 import store from "../store";
 
-import axios from "axios";
-// import router from "@/router";
-
-const http = axios.create();
-
 const router = Router(),
   login = async (data: { Username: string; Password: string }) => {
     const response = await fetch("http://localhost:8080/login", {
@@ -25,24 +20,6 @@ const router = Router(),
     } else {
       alert("Invalid username or password");
     }
-
-    /*
-        console.log("Success logged in User =", response.username);
-        store.state.currentUser = data.foundUser;
-        localStorage.setItem("userId", data.foundUser.username);
-        store.state.userId = data.foundUser.username;
-        router.push({ path: "/" });
-        store.state.loginUsernameModel = "";
-        store.state.loginPasswordModel = "";
-
-      .then((response) => {
-        
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    console.log(Response.arguments);
-    */
   };
 
 const Username = ref(""),
@@ -53,6 +30,7 @@ const doLogin = async () => {
   console.log(Username.value);
   console.log(Password.value);
   login(data);
+  router.push("/");
 };
 </script>
 
