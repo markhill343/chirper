@@ -1,10 +1,10 @@
 <script lang="ts">
-import { tsImportEqualsDeclaration } from "@babel/types";
 import PressButton from "./PressButton.vue";
+import store from "../../store";
 
 export default {
   name: "ChirpForm",
-  probs: ["infoForTweet", "is Detailed", "child"],
+  probs: ["infoForChirp", "is Detailed", "child"],
   components: {
     PressButton,
   },
@@ -21,19 +21,19 @@ export default {
     };
   },
   mounted() {
-    let chirpInfo = this.infoForTweet.text.replaceAll(
-      this.$store.state.hashtagRegex,
+    let chirpInfo = this.infoForChirp.text.replaceAll(
+      store.state.hashtagRegex,
       "<a class='link' href=" + "'#'>#$1</a>"
     );
     chirpInfo = chirpInfo.replaceAll(
-      this.$store.state.usernameRegex,
+      store.state.usernameRegex,
       "<a class='link' href='/$1'>@$1</a>"
     );
-    this.infoForTweet.text = chirpInfo;
+    infoForChirp.text = chirpInfo;
   },
   methods: {
     toggleChirpActionVisible() {
-      this.chirpAction = false;
+      chirpAction = false;
       this.rechripAction = false;
       this.chirpActionVisible = !this.chirpActionVisible;
       console.log("toggle action clicked");
@@ -56,7 +56,7 @@ export default {
       }
       console.log("rootClick");
       const redirectedPath = "/" + this.infoForChirp.username;
-      +"/tweets" + this.infoForChirp.id;
+      +"/chirps" + this.infoForChirp.id;
       this.$router.push({ path: redirectedPath });
     },
     isImage() {
@@ -69,7 +69,7 @@ export default {
       this.infoForChirp.likedUsers.push(this.$store.state.currentUser._id);
     },
     unlikeChirp() {
-      this.likeOrUnlike(this.infoForChirp._id, false);
+      likeOrUnlike(this.infoForChirp._id, false);
       this.infoForChirp.likedUsers.splice(
         this.infoForChirp.likedUsers.indexOf(this.$store.state.currentUser._id),
         1

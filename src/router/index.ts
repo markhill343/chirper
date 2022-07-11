@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, type Router } from "vue-router";
-import { store } from "../store/index";
+import store from "../store/index";
 import ViewHome from "../views/ViewHome.vue";
 import ViewRegister from "../views/ViewRegister.vue";
 import ViewProfile from "../views/ViewProfile.vue";
@@ -23,7 +23,7 @@ const router = () => {
       },
       beforeEnter: (to, from, next) => {
         if (store.state.userId) {
-          next("/home");
+          next("/");
         } else {
           next();
         }
@@ -37,7 +37,7 @@ const router = () => {
       },
       beforeEnter: (to, from, next) => {
         if (store.state.userId) {
-          next("/home");
+          next("/");
         } else {
           next();
         }
@@ -55,14 +55,19 @@ const router = () => {
             next();
           } else {
             store.state.isLoading = true;
+            const username = to.params.username;
             fetch(`http://localhost:8080/getuserwithdetails`, {
-              username: to.params.username,
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(username),
             }).then(async (result) => {
-              console.log(`here is user: ${result.data}`);
-              if (!result.data) {
+              console.log(`here is user: ${result}`);
+              if (!result) {
                 next("/");
               }
-              store.state.userForProfile = await result.data;
+              store.state.userForProfile = await result;
               store.state.isLoading = false;
               next();
             });

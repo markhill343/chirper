@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import StoreUser from "./store/StoreUser";
+import store from "./store/index";
 import Router from "./router";
 const router = Router(),
-  storeUser = StoreUser(),
+  storeUser = store,
   isActive = (path: string) => router.currentRoute.value.path.startsWith(path);
 </script>
 
@@ -10,7 +10,11 @@ const router = Router(),
   <nav>
     <ul style="float: right">
       <li :class="storeUser">
-        <router-link to="/profile">Profil</router-link>
+        <router-link
+          to="/:username"
+          :class="{ 'router-link-active': isActive('/:username') }"
+          >Account</router-link
+        >
       </li>
     </ul>
     <ul>

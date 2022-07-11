@@ -1,18 +1,13 @@
-import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
 import ConfigStore from "./store/StoreConfig";
 import Router from "./router";
 import getJson from "./service/getJson";
 
-const pinia = createPinia(),
-  app = createApp(App);
+const app = createApp(App);
 
 const init = async () => {
-  const configStore = ConfigStore(pinia);
-  //configStore.reset(await getJson("./json/config.json"));
-
-  app.use(pinia).use(Router()).mount("#app");
+  app.use(Router()).mount("#app");
 };
 
 init();

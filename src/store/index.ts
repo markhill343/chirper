@@ -1,11 +1,10 @@
-import { createApp } from "vue";
 import { createStore } from "vuex";
 
-export const store = createStore({
+const store = createStore({
   state: {
     isLoading: true,
 
-    loginUsername: "",
+    loginUsernameModel: "",
     loginPasswordModel: "",
     loginErrors: null,
 
@@ -57,3 +56,5 @@ export const store = createStore({
     tweets: [],
   },
 });
+
+export default store;

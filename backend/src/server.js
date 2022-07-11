@@ -58,7 +58,9 @@ app.post("/login", (req, res) => {
       } else {
         if (user.password === req.body.Password._value) {
           console.log("User found");
-          res.status(200).send("User found");
+          const data = { username: user.username, found: true };
+          res.send(data);
+          console.log(`found user: ${user}`);
         } else {
           console.log("Wrong password");
           res.status(401).send("Wrong password");
@@ -66,7 +68,8 @@ app.post("/login", (req, res) => {
       }
     });
   } catch (error) {
-    return res.status(500).send("Error");
+    console.log(error);
+    res.status(500).send("Error");
   }
 });
 

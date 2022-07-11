@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import PressButton from "@/components/PressButton.vue";
-import ChirperButton from "@/components/ChirperButton.vue";
-import Chirp from "@/components/Chirp.vue";
-import 
-
-
+import PressButton from "../components/form/PressButton.vue";
+import ChirperButton from "../components/form/ChirperButton.vue";
+import Chirp from "../components/form/ChirpForm.vue";
 </script>
 
 <style></style>
