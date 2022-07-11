@@ -44,12 +44,12 @@ const router = () => {
       },
     },
     {
-      path: "/:username",
+      path: "/profile",
       component: ViewProfile,
       meta: {
         title: "User",
       },
-      beforeEnter: async (to, from, next) => {
+      beforeEnter: async (to, next) => {
         console.log(localStorage.getItem("currentUser"));
         if (localStorage.getItem("currentUser")) {
           console.log("toparams", to.params.username);
@@ -79,12 +79,13 @@ const router = () => {
                 }
                 store.state.currentUser = await data.username;
                 store.state.isLoading = false;
+                next("");
               });
             };
             reply();
           }
         } else {
-          next("/");
+          next("next");
         }
       },
     },

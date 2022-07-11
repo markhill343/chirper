@@ -3,6 +3,7 @@ import PressButton from "../components/form/PressButton.vue";
 import ChirperButton from "../components/form/ChirperButton.vue";
 import Chirp from "../components/form/ChirpForm.vue";
 import FollowUnfollowButtonVue from "../components/form/FollowUnfollowButton.vue";
+import store from "../store/index";
 
 export default {
   data() {
@@ -36,13 +37,22 @@ export default {
         // if(newValue.params.username === this.$store.state.currentUser.username){
         //   this.$store.state.userForProfile = this.$store.state.currentUser
         // }
-        axios
-          .post(`${process.env.VUE_APP_API_BASE_URL}/getuserwithdetails`, {
-            username: newValue.params.username,
-          })
-          .then(async (result) => {
-            this.$store.state.userForProfile = await result.data;
+        const response = () => {
+          const username = localStorage.getItem("currentUser"),
+            data = { username };
+
+          fetch("http://localhost:8080/getuserwithdetails", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }).then(async (result) => {
+            const data = JSON.parse(await result.text());
+            console.log("here i am in the train" + data);
+            store.state.userForProfile = await data;
           });
+        };
       },
     },
   },
@@ -53,6 +63,7 @@ export default {
 <style></style>
 
 <template>
+  <h1>hello Julia</h1>
   <div class="profileRoot">
     <div class="headerProfile"></div>
     <PressButton action="goBack" icon-class="arrowLeft" />

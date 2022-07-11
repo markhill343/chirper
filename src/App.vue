@@ -11,17 +11,16 @@ const router = Router(),
     <ul style="float: right">
       <li :class="storeUser">
         <router-link
-          to="/:username"
-          :class="{ 'router-link-active': isActive('/:username') }"
+          to="/profile"
+          :class="{ 'router-link-active': isActive('/profile') }"
           >username</router-link
         >
       </li>
     </ul>
     <ul>
-      <li><router-link to="/">Home</router-link></li>
       <li :class="storeUser">
         <router-link to="/" :class="{ 'router-link-active': isActive('/') }"
-          >Hallo</router-link
+          >Home</router-link
         >
       </li>
       <li :class="storeUser">
