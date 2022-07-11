@@ -1,6 +1,6 @@
 <template>
   <span>
-    <i @click="handleAction()" class="actionButton"></i>
+    <i @click="handleAction()" class="PressButton"></i>
   </span>
 </template>
 

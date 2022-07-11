@@ -47,7 +47,7 @@ const store = createStore({
 
     currentUser: {},
 
-    userForProfile: {},
+    userForProfile: { username: String },
 
     tweetForDetail: {},
 

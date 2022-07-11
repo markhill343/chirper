@@ -122,10 +122,8 @@ app.post("/getuserwithdetails", (req, res) => {
         },
       ],
     })
-    // .populate('likedChirps')
     .exec()
     .then((user) => {
-      console.log(user);
       res.send(user);
       console.log("the work");
     });

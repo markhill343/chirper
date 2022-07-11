@@ -50,27 +50,38 @@ const router = () => {
         title: "User",
       },
       beforeEnter: async (to, from, next) => {
-        if (localStorage.getItem("userId")) {
-          if (to.params.username === store.state.userForProfile.username) {
+        console.log(localStorage.getItem("currentUser"));
+        if (localStorage.getItem("currentUser")) {
+          console.log("toparams", to.params.username);
+          if (to.params.username === store.state.currentUser) {
             next();
           } else {
             store.state.isLoading = true;
-            const username = to.params.username;
-            fetch(`http://localhost:8080/getuserwithdetails`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(username),
-            }).then(async (result) => {
-              console.log(`here is user: ${result}`);
-              if (!result) {
-                next("/");
-              }
-              store.state.userForProfile = await result;
-              store.state.isLoading = false;
-              next();
-            });
+            const username = localStorage.getItem("currentUser"),
+              data = { username };
+            console.log("username", username);
+            const reply = async () => {
+              const response = await fetch(
+                "http://localhost:8080/getuserwithdetails",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                }
+              ).then(async (result) => {
+                const data = JSON.parse(await result.text());
+                console.log(`here is user: ${data.username}`);
+                if (result.ok) {
+                  console.log("lets goo!");
+                  next("/");
+                }
+                store.state.currentUser = await data.username;
+                store.state.isLoading = false;
+              });
+            };
+            reply();
           }
         } else {
           next("/");

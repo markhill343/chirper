@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getCurrentInstance } from "vue";
-import { store } from "../../store";
+import store from "../../store";
 
 const followOrUnfollow = async (follow: boolean) => {
   const currentUserId = store.state.currentUser,
