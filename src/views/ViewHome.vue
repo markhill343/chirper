@@ -1,9 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import storeUser from "../store";
+</script>
 
 <template>
-  <h1>Startseite</h1>
-  <p>Dies ist eine Testanwendung zur Account-Verwaltung.</p>
-  <h3>peter petervcf</h3>
+  <h1>Chirper</h1>
+  <p>Here you can chirp all you want</p>
+  <h3>Our USP is that Elon Musk is not on chirper</h3>
+  <p>
+    <router-link to="/:username">
+      <span>Your ARE LOGGED IN AS USER: {{ storeUser.state.currentUser }}</span>
+    </router-link>
+  </p>
 </template>
 
 <style lang="scss">

@@ -1,9 +1,12 @@
-import { createApp } from "vue";
 import { createStore } from "vuex";
 
-export const store = createStore({
+const store = createStore({
   state: {
     isLoading: true,
+
+    loginUsernameModel: "",
+    loginPasswordModel: "",
+    loginErrors: null,
 
     registerUsernameModel: "",
     registerEmailModel: "",
@@ -11,8 +14,47 @@ export const store = createStore({
     registerNameModel: "",
     registerErrors: "",
 
-    loginUsernameOrEmailModel: "",
-    loginPasswordModel: "",
-    loginErrors: null,
+    newInfos: {
+      name: "",
+      mail: "",
+      website: "",
+      bio: "",
+      location: "",
+      profile_image: "",
+      bannerImage: "",
+    },
+
+    newTweet: {
+      text: "",
+      image: "",
+    },
+
+    registerPage: false,
+
+    addTweetPage: false,
+
+    editProfilePopup: false,
+
+    userId: localStorage.getItem("userId"),
+
+    hashtagRegex: /(?:(?<=\s)|^)#(\w*[A-Za-z_ğüşıöçĞÜŞİÖÇ]+\w*)/gi,
+
+    usernameRegex: /(?:(?<=\s)|^)@(\w*[A-Za-z_ğüşıöçĞÜŞİÖÇ]+\w*)/gi,
+
+    repliedTweet: {},
+
+    zoomedImage: "",
+
+    currentUser: {},
+
+    userForProfile: { username: String },
+
+    tweetForDetail: {},
+
+    bookmarks: {},
+
+    tweets: [],
   },
 });
+
+export default store;

@@ -1,25 +1,28 @@
 <script setup lang="ts">
-import StoreUser from "./store/StoreUser";
+import store from "./store/index";
 import Router from "./router";
 const router = Router(),
-  storeUser = StoreUser(),
-  isActive = (path: string) => router.currentRoute.value.path.startsWith(path);
+  storeUser = store,
+  isActive = (path: string) => router.currentRoute.value.path.startsWith(path),
+  username = storeUser.state.currentUser.username;
+console.log(username);
 </script>
 
 <template>
   <nav>
     <ul style="float: right">
       <li :class="storeUser">
-        <router-link to="/profile">Profil</router-link>
+        <router-link
+          :to="'/' + username"
+          :class="{ 'router-link-active': isActive('/:username') }"
+          >My Profile</router-link
+        >
       </li>
     </ul>
     <ul>
-      <li><router-link to="/">Home</router-link></li>
       <li :class="storeUser">
-        <router-link
-          to="/hello"
-          :class="{ 'router-link-active': isActive('/hello') }"
-          >Hallo</router-link
+        <router-link to="/" :class="{ 'router-link-active': isActive('/') }"
+          >Home</router-link
         >
       </li>
       <li :class="storeUser">
