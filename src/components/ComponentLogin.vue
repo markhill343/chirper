@@ -11,15 +11,12 @@ const router = Router(),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    }).then(async (result) => {
+      const data = JSON.parse(await result.text());
+      console.log("Success", data.Username);
+      store.state.currentUser = data;
+      store.state.userId = data.Username;
     });
-    if (response.status == 200) {
-      console.log("Success", Username.value);
-      store.state.currentUser = Username.value;
-      localStorage.setItem("currentUser", Username.value);
-      store.state.userId = Username.value;
-    } else {
-      alert("Invalid username or password");
-    }
   };
 
 const Username = ref(""),

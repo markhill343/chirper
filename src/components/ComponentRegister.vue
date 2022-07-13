@@ -16,6 +16,11 @@ const router = Router(),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    }).then(async (result) => {
+      const data = JSON.parse(await result.text());
+      console.log("Success", data.Username);
+      store.state.currentUser = data;
+      store.state.userId = data.Username;
     });
   };
 

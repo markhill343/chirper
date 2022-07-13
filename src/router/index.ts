@@ -3,6 +3,7 @@ import store from "../store/index";
 import ViewHome from "../views/ViewHome.vue";
 import ViewRegister from "../views/ViewRegister.vue";
 import ViewProfile from "../views/ViewProfile.vue";
+import { user } from "../../backend/src/models/user";
 
 let l_router: Router | null = null;
 
@@ -44,20 +45,19 @@ const router = () => {
       },
     },
     {
-      path: "/profile",
+      path: "/:username",
       component: ViewProfile,
       meta: {
         title: "User",
       },
       beforeEnter: async (to, next) => {
-        console.log(localStorage.getItem("currentUser"));
-        if (localStorage.getItem("currentUser")) {
-          console.log("toparams", to.params.username);
-          if (to.params.username === store.state.currentUser) {
+        console.log("Retrieving user details for " + to.params.username);
+        if (store.state.userForProfile.username) {
+          if (to.params.username === store.state.userForProfile.username) {
             next();
           } else {
             store.state.isLoading = true;
-            const username = localStorage.getItem("currentUser"),
+            const username = to.params.username,
               data = { username };
             console.log("username", username);
             const reply = async () => {
@@ -73,13 +73,18 @@ const router = () => {
               ).then(async (result) => {
                 const data = JSON.parse(await result.text());
                 console.log(`here is user: ${data.username}`);
-                if (result.ok) {
-                  console.log("lets goo!");
+
+                if (!result.ok) {
                   next("/");
                 }
-                store.state.currentUser = await data.username;
+                store.state.userForProfile = await data;
                 store.state.isLoading = false;
-                next("");
+                console.log(
+                  "Found user details for " +
+                    store.state.userForProfile.username
+                );
+
+                next();
               });
             };
             reply();
