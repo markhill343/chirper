@@ -58,7 +58,8 @@ app.post("/login", (req, res) => {
       } else {
         if (user.password === req.body.Password._value) {
           console.log("User found");
-          res.status(200).send("User found");
+          res.send(user);
+          console.log(`found user: ${user}`);
         } else {
           console.log("Wrong password");
           res.status(401).send("Wrong password");
@@ -66,7 +67,8 @@ app.post("/login", (req, res) => {
       }
     });
   } catch (error) {
-    return res.status(500).send("Error");
+    console.log(error);
+    res.status(500).send("Error");
   }
 });
 
@@ -85,6 +87,7 @@ app.post("/register", async (req, res) => {
   newUser.save(function (err) {
     if (err) return console.error(err);
   });
+  res.send(newUser);
 });
 
 app.post("/getuserwithoutdetail", (req, res) => {
@@ -97,6 +100,7 @@ app.post("/getuserwithoutdetail", (req, res) => {
 });
 
 app.post("/getuserwithdetails", (req, res) => {
+  console.log("Retrieving user details for " + req.body.username);
   user
     .findOne({ username: req.body.username })
     .populate({
@@ -119,12 +123,10 @@ app.post("/getuserwithdetails", (req, res) => {
         },
       ],
     })
-    // .populate('likedChirps')
     .exec()
     .then((user) => {
-      console.log(user);
       res.send(user);
-      console.log("the work");
+      console.log("Found user details for " + req.body.username);
     });
 });
 

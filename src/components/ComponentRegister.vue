@@ -1,19 +1,28 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-const register = async (data: {
-  Name: Ref<string>;
-  Username: Ref<string>;
-  Email: Ref<string>;
-  Password: Ref<string>;
-}) => {
-  const response = await fetch("http://localhost:8080/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-};
+import Router from "../router";
+import store from "../store";
+
+const router = Router(),
+  register = async (data: {
+    Name: Ref<string>;
+    Username: Ref<string>;
+    Email: Ref<string>;
+    Password: Ref<string>;
+  }) => {
+    const response = await fetch("http://localhost:8080/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(async (result) => {
+      const data = JSON.parse(await result.text());
+      console.log("Success", data.Username);
+      store.state.currentUser = data;
+      store.state.userId = data.Username;
+    });
+  };
 
 const Name = ref(""),
   Username = ref(""),
@@ -28,6 +37,7 @@ const doRegister = () => {
   console.log(Email.value);
   console.log(Password.value);
   register(data);
+  router.push("/");
 };
 </script>
 

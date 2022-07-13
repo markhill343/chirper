@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 import Router from "../router";
+import store from "../store";
 
 const router = Router(),
-  login = async (data: { Username: Ref<string>; Password: Ref<string> }) => {
+  login = async (data: { Username: string; Password: string }) => {
     const response = await fetch("http://localhost:8080/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.status === 200) {
-        console.log("Login success");
-        router.push("/");
-      }
+    }).then(async (result) => {
+      const data = JSON.parse(await result.text());
+      console.log("Success", data.Username);
+      store.state.currentUser = data;
+      store.state.userId = data.Username;
     });
   };
 
@@ -26,6 +27,7 @@ const doLogin = async () => {
   console.log(Username.value);
   console.log(Password.value);
   login(data);
+  router.push("/");
 };
 </script>
 

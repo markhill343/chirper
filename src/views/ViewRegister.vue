@@ -8,7 +8,6 @@ import MyContainer from "../components/MyContainer.vue";
 import Router from "../router";
 import StoreSession from "../store/StoreSession";
 import StoreUser from "../store/StoreUser";
-import StoreConfig from "../store/StoreConfig";
 import defaultAccount from "../model/defaultAccount";
 </script>
 
