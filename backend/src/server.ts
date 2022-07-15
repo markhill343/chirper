@@ -44,41 +44,9 @@ app.get("/", function (req, res) {
   res.send("hello, world!");
 });
 
-//login function
-app.post("/login", (req, res) => {
-  console.log("login request");
-  console.log(req.body);
-  try {
-    user.findOne({ username: req.body.Username._value }, (err, user ) => {
-      user.comparePassword(req.body.Password._value, user.password, (err, isMatch) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Error");
-      } else if (!user) {
-        console.log("User not found");
-        res.status(404).send("User not found");
-      } else {
-        if (isMatch) {
-          console.log("User found");
-          res.send(user);
-          console.log(`found user: ${user}`);
-        } else {
-          console.log("Wrong password");
-          res.status(401).send("Wrong password");
-        }
-      }
-    });
-  });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error");
-  }
-});
-
 //register function
 app.post("/register", async (req, res) => {
   console.log("register request");
-  console.log(req.body);
   const newUser = new user({
     id: randomUUID(),
     username: req.body.Username._value,
@@ -88,9 +56,39 @@ app.post("/register", async (req, res) => {
     bio: "Generic Bio",
   });
   newUser.save(function (err) {
-    if (err) return console.error(err);
+    if (err) {
+      res.status(500).send('Error registerung new User');
+      return console.error(err);
+    }else{
+      res.send(newUser);
+    }
   });
-  res.send(newUser);
+});
+
+//login function
+app.post("/login", (req, res) => {
+  console.log("login request");
+    user.findOne({ username: req.body.Username._value }, (err, user ) => {
+      
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error");
+      } else if (!user) {
+        console.log("User not found");
+        res.status(404).send("User not found");
+      } else {
+        user.comparePassword(req.body.Password._value, user.password, (err, isMatch) => {
+        if (isMatch) {
+          console.log("User found");
+          res.send(user);
+          console.log(`found user: ${user}`);
+        } else {
+          console.log("Wrong password");
+          res.status(401).send("Wrong password");
+        }
+      });
+      }
+    });
 });
 
 app.post("/getuserwithoutdetail", (req, res) => {
@@ -105,7 +103,17 @@ app.post("/getuserwithoutdetail", (req, res) => {
 app.post("/getuserwithdetails", (req, res) => {
   console.log("Retrieving user details for " + req.body.username);
   user
-    .findOne({ username: req.body.username })
+    .findOne({ username: req.body.username }, (err) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error');
+      } else if (!user) {
+        console.log('User not found');
+        res.status(404).send('User not found');
+      } else {
+        res.status(200);
+      }
+    })
     .populate({
       path: "chirps",
       options: {
@@ -170,32 +178,35 @@ app.post("/getthechirp", (req, res) => {
 });
 
 app.post("/updateUser", (req, res) => {
-  console.log(req.body);
-  user.update(
-    { _id: req.body.userId },
-    { $set: req.body.newInfos },
-    (err: any, result: any) => {
-      if (err) throw err;
-
-      console.log(result);
-
-      res.send(result);
-    }
-  );
-});
-
-//get users
-app.post("/users", (req, res) => {
-  console.log("get users request");
-  console.log(req.body);
-  user.findOne({ username: req.body.username }, (err: any, user: any) => {
+  user.findOne({ username: req.body.Username }, (err, user) => {
     if (err) {
       console.log(err);
-      res.status(500).send(err);
+      res.status(500).send('Error');
+    } else if (!user) {
+      console.log('User not found');
+      res.status(404).send('User not found');
+    } else {
+      res.status(200);
+      console.log('User found' + user);
+      user.password = req.body.Password;
+      user.username = req.body.NewUsername;
+      user.save();
+      user.updateOne(
+        { password: req.body.Password, username: req.body.newUsername },
+        function (err, user) {
+          if (err) {
+            console.log(err);
+            res.status(500).send('Error');
+          } else {
+            console.log('User updated');
+            res.send(user.password);
+          }
+        }
+      );
     }
-    res.send(user);
   });
 });
+
 
 //new chirp
 app.post("/newchirp", async (req, res) => {
