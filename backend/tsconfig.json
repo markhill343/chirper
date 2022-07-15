@@ -1,19 +1,22 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "backend/**/*", "backend/**/*.ts"],
+  "include": ["src/**/*", "src/**/*.vue", "backend/**/*", "backend/**/*.ts", "./**/*.ts"],
   "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2017",
+    "outDir": "_dist/",
+    "sourceMap": true,
+    "strict": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": false,
     "baseUrl": ".",
     "isolatedModules": false,
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types":["node"],
-    "typeRoots": [ "../node_modules/@types" ]
+    "typeRoots": [ "../node_modules/@types" ],
+    "esModuleInterop": true,
+    "allowJs": true
   },
-
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
-  ]
 }

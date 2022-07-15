@@ -4,12 +4,7 @@ import Router from "../router";
 import store from "../store";
 
 const router = Router(),
-  register = async (data: {
-    Name: Ref<string>;
-    Username: Ref<string>;
-    Email: Ref<string>;
-    Password: Ref<string>;
-  }) => {
+  register = async () => {
     const response = await fetch("http://localhost:8080/register", {
       method: "POST",
       headers: {
@@ -21,6 +16,7 @@ const router = Router(),
       console.log("Success", data.Username);
       store.state.currentUser = data;
       store.state.userId = data.Username;
+      router.push("/");
     });
   };
 
@@ -28,17 +24,8 @@ const Name = ref(""),
   Username = ref(""),
   Email = ref(""),
   Password = ref(""),
-  data = { Name, Username, Email, Password };
+  data = { Name: Name, Username: Username, Email: Email, Password: Password };
 
-const doRegister = () => {
-  console.log("works");
-  console.log(Name.value);
-  console.log(Username.value);
-  console.log(Email.value);
-  console.log(Password.value);
-  register(data);
-  router.push("/");
-};
 </script>
 
 <template>
@@ -50,7 +37,7 @@ const doRegister = () => {
       <li>
         <input v-model="Password" placeholder="Password" />
       </li>
-      <button type="submit" id="register" @click="doRegister">Register</button>
+      <button type="submit" id="register" @click="register">Register</button>
     </ul>
   </form>
 </template>

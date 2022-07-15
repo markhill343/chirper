@@ -5,14 +5,15 @@
  */
 
 //Set constants for the application
-import express from "express";
+import express from 'express';
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 
 //to do create the models
-import { user } from "./models/user.js";
-import { chirp } from "./models/chirp.js";
+import { user } from "./models/user";
+import { chirp } from "./models/chirp";
+import { randomUUID } from 'crypto';
 
 const PORT = 8080,
   SERVER = `localhost:${PORT}`,
@@ -22,7 +23,6 @@ const PORT = 8080,
 console.log("Connecting to ChirperDB...");
 mongoose.connect("mongodb://127.0.0.1:27017/chirper", {
   authSource: "admin",
-  useNewUrlParser: true,
   user: "admin",
   pass: "markistdoof",
 });
@@ -47,8 +47,10 @@ app.get("/", function (req, res) {
 //login function
 app.post("/login", (req, res) => {
   console.log("login request");
+  console.log(req.body);
   try {
-    user.findOne({ username: req.body.Username._value }, (err, user) => {
+    user.findOne({ username: req.body.Username._value }, (err, user ) => {
+      user.comparePassword(req.body.Password._value, user.password, (err, isMatch) => {
       if (err) {
         console.log(err);
         res.status(500).send("Error");
@@ -56,7 +58,7 @@ app.post("/login", (req, res) => {
         console.log("User not found");
         res.status(404).send("User not found");
       } else {
-        if (user.password === req.body.Password._value) {
+        if (isMatch) {
           console.log("User found");
           res.send(user);
           console.log(`found user: ${user}`);
@@ -66,6 +68,7 @@ app.post("/login", (req, res) => {
         }
       }
     });
+  });
   } catch (error) {
     console.log(error);
     res.status(500).send("Error");
@@ -75,13 +78,13 @@ app.post("/login", (req, res) => {
 //register function
 app.post("/register", async (req, res) => {
   console.log("register request");
-  console.log(req.body.Name._value);
-
+  console.log(req.body);
   const newUser = new user({
-    name: req.body.Name._value,
+    id: randomUUID(),
     username: req.body.Username._value,
     password: req.body.Password._value,
     mail: req.body.Email._value,
+    name: req.body.Name._value,
     bio: "Generic Bio",
   });
   newUser.save(function (err) {
@@ -92,7 +95,7 @@ app.post("/register", async (req, res) => {
 
 app.post("/getuserwithoutdetail", (req, res) => {
   console.log(req.body);
-  user.findOne({ username: req.body.username }, (err, user) => {
+  user.findOne({ username: req.body.username }, (err: any, user: any) => {
     if (err) throw err;
 
     res.send(user);
@@ -171,7 +174,7 @@ app.post("/updateUser", (req, res) => {
   user.update(
     { _id: req.body.userId },
     { $set: req.body.newInfos },
-    (err, result) => {
+    (err: any, result: any) => {
       if (err) throw err;
 
       console.log(result);
@@ -185,7 +188,7 @@ app.post("/updateUser", (req, res) => {
 app.post("/users", (req, res) => {
   console.log("get users request");
   console.log(req.body);
-  user.findOne({ username: req.body.username }, (err, user) => {
+  user.findOne({ username: req.body.username }, (err: any, user: any) => {
     if (err) {
       console.log(err);
       res.status(500).send(err);
@@ -201,7 +204,7 @@ app.post("/newchirp", async (req, res) => {
     .then(async (newChirp) => {
       await user.findOne(
         { username: req.body.username },
-        async (err, currentUser) => {
+        async (err: any, currentUser: { chirps: mongoose.Types.ObjectId[]; save: () => any; }) => {
           if (err) {
             console.log(err);
           }
@@ -222,7 +225,7 @@ app.post("/newchirp", async (req, res) => {
       throw err;
     });
 });
-
+/*
 app.post("/addreply", async (req, res) => {
   await chirp
     .create(req.body.chirpContent)
@@ -235,7 +238,7 @@ app.post("/addreply", async (req, res) => {
       });
       await user.findOne(
         { username: req.body.username },
-        async (err, currentUser) => {
+        async (err: any, currentUser: { chirp: any[]; save: () => any; }) => {
           if (err) {
             console.log(err);
           }
@@ -331,9 +334,9 @@ app.post("/followorunfollow", (req, res) => {
 app.post("/removeChirp", async (req, res) => {
   const chirpId = req.body.chirpId;
 
-  await chirp.findById(chirpId, (err, t) => {
+  await chirp.findById(chirpId, (err: any, t: { isReply: any; parent: any; }) => {
     if (t.isReply) {
-      chirp.findById(t.parent, async (err, parentChirp) => {
+      chirp.findById(t.parent, async (err: any, parentChirp: { replies: any[]; save: () => void; }) => {
         await parentChirp.replies.splice(
           parentChirp.replies.indexOf(chirpId),
           1
@@ -343,7 +346,7 @@ app.post("/removeChirp", async (req, res) => {
     }
   });
 
-  chirp.findOneAndDelete({ _id: chirpId }, (err, removed) => {
+  chirp.findOneAndDelete({ _id: chirpId }, (err: any, removed: any) => {
     if (err) throw err;
 
     console.log(`document have been removed: ${removed}`);
@@ -354,7 +357,7 @@ app.post("/likeorunlike", (req, res) => {
   const currentUserId = req.body.currentUserId;
   const chirpId = req.body.chirpId;
   const like = req.body.like;
-  user.findById(currentUserId, (err, currentUser) => {
+  user.findById(currentUserId, (err: any, currentUser: { likedchirp: any[]; save: () => void; likedChirps: any[]; }) => {
     if (err) {
       console.log(err);
     }
@@ -370,7 +373,7 @@ app.post("/likeorunlike", (req, res) => {
       currentUser.save();
     }
 
-    chirp.findById(chirpId, (err, chirp) => {
+    chirp.findById(chirpId, (err: any, chirp: { likedUsers: any[]; save: () => void; }) => {
       if (err) {
         console.log(err);
       }
@@ -411,6 +414,7 @@ app.post("/getbookmarks", (req, res) => {
       res.send(u.bookmarks);
     });
 });
+*/
 
 app.listen(PORT);
 console.log(`Running on ${SERVER}`);

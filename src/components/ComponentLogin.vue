@@ -4,7 +4,7 @@ import Router from "../router";
 import store from "../store";
 
 const router = Router(),
-  login = async (data: { Username: string; Password: string }) => {
+  login = async () => {
     const response = await fetch("http://localhost:8080/login", {
       method: "POST",
       headers: {
@@ -16,19 +16,14 @@ const router = Router(),
       console.log("Success", data.Username);
       store.state.currentUser = data;
       store.state.userId = data.Username;
+      router.push("/");
     });
   };
 
 const Username = ref(""),
   Password = ref(""),
-  data = { Username, Password };
+  data = { Username: Username, Password: Password };
 
-const doLogin = async () => {
-  console.log(Username.value);
-  console.log(Password.value);
-  login(data);
-  router.push("/");
-};
 </script>
 
 <template>
@@ -38,7 +33,7 @@ const doLogin = async () => {
       <li>
         <input v-model="Password" placeholder="Password" />
       </li>
-      <button type="submit" id="login" @click="doLogin">Login</button>
+      <button type="submit" id="login" @click="login">Login</button>
     </ul>
   </form>
 </template>
