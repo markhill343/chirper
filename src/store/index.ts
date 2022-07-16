@@ -24,14 +24,14 @@ const store = createStore({
       bannerImage: "",
     },
 
-    newTweet: {
+    newChirp: {
       text: "",
       image: "",
     },
 
     registerPage: false,
 
-    addTweetPage: false,
+    addChirpPage: false,
 
     editProfilePopup: false,
 
@@ -41,7 +41,7 @@ const store = createStore({
 
     usernameRegex: /(?:(?<=\s)|^)@(\w*[A-Za-z_ğüşıöçĞÜŞİÖÇ]+\w*)/gi,
 
-    repliedTweet: {},
+    repliedChirp: {},
 
     zoomedImage: "",
 
@@ -49,11 +49,11 @@ const store = createStore({
 
     userForProfile: { username: String },
 
-    tweetForDetail: {},
+    chirpForDetail: {},
 
     bookmarks: {},
 
-    tweets: [],
+    chirps: [],
   },
 });
 

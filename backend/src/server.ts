@@ -95,7 +95,6 @@ app.post("/getuserwithoutdetail", (req, res) => {
   console.log(req.body);
   user.findOne({ username: req.body.username }, (err: any, user: any) => {
     if (err) throw err;
-
     res.send(user);
   });
 });
@@ -211,7 +210,7 @@ app.post("/updateUser", (req, res) => {
 //new chirp
 app.post("/newchirp", async (req, res) => {
   await chirp
-    .create(req.body.cirpContent)
+    .create(req.body.chirpContent)
     .then(async (newChirp) => {
       await user.findOne(
         { username: req.body.username },
@@ -236,7 +235,7 @@ app.post("/newchirp", async (req, res) => {
       throw err;
     });
 });
-/*
+
 app.post("/addreply", async (req, res) => {
   await chirp
     .create(req.body.chirpContent)
@@ -253,8 +252,7 @@ app.post("/addreply", async (req, res) => {
           if (err) {
             console.log(err);
           }
-
-          await currentUser.chirp.push(chirp._id);
+          await currentUser.chirp.push(newChirp._id);
           await currentUser.save();
 
           await chirp
@@ -274,21 +272,17 @@ app.post("/addreply", async (req, res) => {
 });
 
 app.post("/api/getChirpPage", (req, res) => {
-  // res.send('succes')
   const page = Number(req.body.page);
   const s = (page - 1) * Number(req.body.chirpPerPage);
   const l = Number(req.body.chirpPerPage);
   chirp
     .find({})
-    // .skip(s)
-    // .limit(l)
     .sort({ createdDate: -1 })
     .populate({
       path: "author",
     })
     .exec((err, chirps) => {
       if (err) throw err;
-
       console.log(chirps);
       res.send(chirps);
       console.log(s, l);
@@ -301,14 +295,11 @@ app.post("/followorunfollow", (req, res) => {
   const userIdToFollow = req.body.userIdToFollow;
   const follow = req.body.follow;
 
-  console.log(currentUserId, userIdToFollow, follow);
-
   user.findById(currentUserId).exec((error, currentUser) => {
     if (error) {
       console.log(error);
     }
 
-    console.log(`current user : ${currentUser}`);
     if (follow) {
       currentUser.following.push(userIdToFollow);
       currentUser.save();
@@ -323,7 +314,6 @@ app.post("/followorunfollow", (req, res) => {
       if (error) {
         console.log(error);
       }
-
       console.log(`user to follow: ${userToFollow}`);
 
       if (follow) {
@@ -338,8 +328,7 @@ app.post("/followorunfollow", (req, res) => {
       }
     });
   });
-
-  res.send("success");
+  res.status(200).send("success");
 });
 
 app.post("/removeChirp", async (req, res) => {
@@ -356,11 +345,8 @@ app.post("/removeChirp", async (req, res) => {
       });
     }
   });
-
   chirp.findOneAndDelete({ _id: chirpId }, (err: any, removed: any) => {
     if (err) throw err;
-
-    console.log(`document have been removed: ${removed}`);
   });
 });
 
@@ -372,7 +358,6 @@ app.post("/likeorunlike", (req, res) => {
     if (err) {
       console.log(err);
     }
-
     if (like) {
       currentUser.likedchirp.push(chirpId);
       currentUser.save();
@@ -383,12 +368,10 @@ app.post("/likeorunlike", (req, res) => {
       );
       currentUser.save();
     }
-
     chirp.findById(chirpId, (err: any, chirp: { likedUsers: any[]; save: () => void; }) => {
       if (err) {
         console.log(err);
       }
-
       if (like) {
         chirp.likedUsers.push(currentUserId);
         chirp.save();
@@ -425,7 +408,6 @@ app.post("/getbookmarks", (req, res) => {
       res.send(u.bookmarks);
     });
 });
-*/
 
 app.listen(PORT);
 console.log(`Running on ${SERVER}`);

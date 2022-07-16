@@ -16,9 +16,10 @@ const userSchema = new Schema({
   profilImage: String,
   bannerImage: String,
   joinedDate: { type: Date, default: Date.now },
-  //following: [{ type: Schema, ref: "user" }],
-  //followers: [{ type: Schema, ref: "user" }],
-  //chirps: [{ type: Schema, ref: "chirp" }],
+  following: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  followers: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  chirps: [{ type: Schema.Types.ObjectId, ref: "chirp" }],
+  bookmarks:[{ type: Schema.Types.ObjectId, ref: 'chrip' }],
 });
 
 

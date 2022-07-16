@@ -16,8 +16,8 @@ import ChirperButton1 from "../components/form/ChirperButton.vue";
     <span>
       <h1>{{ store.state.userForProfile.username }}</h1>
       <h2>{{ store.state.userForProfile }}</h2>
-      <h5 class="user-tweet-count">
-        <!--{{ store.state.currentUser.tweets.length }} tweet-->
+      <h5 class="user-chirp-count">
+        <!--{{ store.state.currentUser.chirp.length }} chirp-->
       </h5>
     </span>
     <div class="profileSection">
@@ -41,8 +41,8 @@ import ChirperButton1 from "../components/form/ChirperButton.vue";
     </div>
 
     <div class="profile-tabs">
-      <div class="a-profile-tab">Tweets</div>
-      <div class="a-profile-tab">Tweets & replies</div>
+      <div class="a-profile-tab">Chrips</div>
+      <div class="a-profile-tab">Chrips & replies</div>
       <div class="a-profile-tab">Media</div>
       <div class="a-profile-tab">Likes</div>
     </div>

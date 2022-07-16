@@ -9,9 +9,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "start": "nodemon ./bin/www",
-    "server": "nodemon -r  src/serrer.ts",
-    "server1": "nodemon -r dotenv/config src/server.ts"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "axios": "^0.27.2",
