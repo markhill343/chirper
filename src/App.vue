@@ -3,9 +3,7 @@ import store from "./store/index";
 import Router from "./router";
 const router = Router(),
   storeUser = store,
-  isActive = (path: string) => router.currentRoute.value.path.startsWith(path),
-  username = storeUser.state.currentUser.username;
-console.log(username);
+  isActive = (path: string) => router.currentRoute.value.path.startsWith(path);
 </script>
 
 <template>
@@ -13,8 +11,8 @@ console.log(username);
     <ul style="float: right">
       <li :class="storeUser">
         <router-link
-          :to="'/' + username"
-          :class="{ 'router-link-active': isActive('/:username') }"
+          to="/user"
+          :class="{ 'router-link-active': isActive('/user') }"
           >My Profile</router-link
         >
       </li>

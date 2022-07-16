@@ -55,11 +55,13 @@ app.post("/register", async (req, res) => {
     name: req.body.Name._value,
     bio: "Generic Bio",
   });
+  console.log("Registering user: " + newUser.username);
   newUser.save(function (err) {
     if (err) {
       res.status(500).send('Error registerung new User');
       return console.error(err);
     }else{
+      console.log("User registered" + newUser);
       res.send(newUser);
     }
   });

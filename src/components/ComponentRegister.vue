@@ -5,6 +5,7 @@ import store from "../store";
 
 const router = Router(),
   register = async () => {
+    console.log("Received register request for " + Username);
     const response = await fetch("http://localhost:8080/register", {
       method: "POST",
       headers: {
@@ -13,10 +14,10 @@ const router = Router(),
       body: JSON.stringify(data),
     }).then(async (result) => {
       const data = JSON.parse(await result.text());
-      console.log("Success", data.Username);
+      console.log("Successssssssssss", data.username);
       store.state.currentUser = data;
-      store.state.userId = data.Username;
-      router.push("/");
+      localStorage.setItem("userId", data.username)
+      store.state.userId = data.username;
     });
   };
 

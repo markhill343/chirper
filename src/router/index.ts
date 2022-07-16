@@ -7,7 +7,7 @@ import { user } from "../../backend/src/models/user";
 
 let l_router: Router | null = null;
 
-//Checks if User is loggeg in
+//Checks if User is logged in
 const isLogin = (a) => {
   if (localStorage.getItem("userId")) {
     a();
@@ -20,13 +20,13 @@ const router = () => {
       path: "/",
       component: ViewHome,
       meta: {
-        title: "Chirper - Home",
+        title: "Chirper - Register",
       },
       beforeEnter: (to, from, next) => {
         if (store.state.userId) {
-          next("/");
+          next("/register");
         } else {
-          next();
+          next("/");
         }
       },
     },
@@ -40,21 +40,24 @@ const router = () => {
         if (store.state.userId) {
           next("/");
         } else {
-          next();
+          next("/register");
         }
       },
+      
     },
     {
-      path: "/:username",
+      path: "/user",
       component: ViewProfile,
       meta: {
         title: "User",
       },
       beforeEnter: async (to, next) => {
-        console.log("Retrieving user details for " + to.params.username);
+        console.log("Retrieving user details for " + to);
+        console.log("Retrieving user details for " + to.params);
+        console.log("Retrieving user details for " + to.params.Username);
         if (store.state.userForProfile.username) {
-          if (to.params.username === store.state.userForProfile.username) {
-            next();
+          if (true) {
+            next("user");
           } else {
             store.state.isLoading = true;
             const username = to.params.username,
