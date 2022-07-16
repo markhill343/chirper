@@ -13,7 +13,7 @@ import defaultAccount from "../model/defaultAccount";
 
 <template>
   <div class="home"></div>
-  <my-Container />
+  <my-Container/>
 </template>
 
 <style lang="scss">

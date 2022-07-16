@@ -16,7 +16,7 @@ const router = Router(),
       console.log("Success", data.Username);
       store.state.currentUser = data;
       store.state.userId = data.Username;
-      router.push("/");
+      router.push("/user");
     });
   };
 

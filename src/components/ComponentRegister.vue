@@ -5,19 +5,26 @@ import store from "../store";
 
 const router = Router(),
   register = async () => {
-    console.log("Received register request for " + Username);
+    console.log("register");
     const response = await fetch("http://localhost:8080/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then(async (result) => {
+    }).then(async (result) => { 
+      if (result.status === 200) {
       const data = JSON.parse(await result.text());
-      console.log("Successssssssssss", data.username);
+      console.log("hello 123"+ data);
+      console.log("Success", data.username);
       store.state.currentUser = data;
-      localStorage.setItem("userId", data.username)
-      store.state.userId = data.username;
+      store.state.userId = data.Username;
+      localStorage.setItem('userId', data.Username);
+      console.log("incoming data from regsiter"+ data)
+      //router.push("/user");
+      } else if (result.status === 500) {
+          alert('Username already exists');
+      }
     });
   };
 

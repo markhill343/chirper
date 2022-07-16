@@ -46,7 +46,7 @@ app.get("/", function (req, res) {
 
 //register function
 app.post("/register", async (req, res) => {
-  console.log("register request");
+  console.log("New registration request---------------------------------------");
   const newUser = new user({
     id: randomUUID(),
     username: req.body.Username._value,
@@ -58,10 +58,12 @@ app.post("/register", async (req, res) => {
   console.log("Registering user: " + newUser.username);
   newUser.save(function (err) {
     if (err) {
-      res.status(500).send('Error registerung new User');
-      return console.error(err);
+      res.status(500);
     }else{
+      res.status(200);
       console.log("User registered" + newUser);
+      const data = { Username: newUser.username, Name: newUser.name, Email: newUser.mail, Bio: newUser.bio, joinedDate: newUser.joinedDate };
+      console.log("User registered" + data.Username);
       res.send(newUser);
     }
   });
@@ -245,7 +247,7 @@ app.post("/addreply", async (req, res) => {
       chirp.findById(newChirp.parent).exec((err, t) => {
         if (err) throw err;
 
-        t.replies.push(newChirp._id);
+        //t.replies.push(newChirp._id);
         t.save();
       });
       await user.findOne(
@@ -273,7 +275,7 @@ app.post("/addreply", async (req, res) => {
     });
 });
 
-app.post("/api/getChirpPage", (req, res) => {
+app.post("/getChirpPage", (req, res) => {
   const page = Number(req.body.page);
   const s = (page - 1) * Number(req.body.chirpPerPage);
   const l = Number(req.body.chirpPerPage);

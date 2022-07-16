@@ -23,10 +23,10 @@ const router = () => {
         title: "Chirper - Register",
       },
       beforeEnter: (to, from, next) => {
-        if (store.state.userId) {
-          next("/register");
-        } else {
+        if (store.state.userId == undefined) {
           next("/");
+        } else {
+          next("/register");
         }
       },
     },
@@ -36,14 +36,6 @@ const router = () => {
       meta: {
         title: "Chirper - Register",
       },
-      beforeEnter: (to, from, next) => {
-        if (store.state.userId) {
-          next("/");
-        } else {
-          next("/register");
-        }
-      },
-      
     },
     {
       path: "/user",
@@ -52,12 +44,10 @@ const router = () => {
         title: "User",
       },
       beforeEnter: async (to, next) => {
-        console.log("Retrieving user details for " + to);
-        console.log("Retrieving user details for " + to.params);
-        console.log("Retrieving user details for " + to.params.Username);
+        console.log("Retrieving user details for " + store.state.userForProfile.username);
         if (store.state.userForProfile.username) {
           if (true) {
-            next("user");
+            //next("user");
           } else {
             store.state.isLoading = true;
             const username = to.params.username,
