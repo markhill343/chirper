@@ -66,6 +66,7 @@ app.post("/register", async (req, res) => {
       const data = { Username: newUser.username, Name: newUser.name, Email: newUser.mail, Bio: newUser.bio, joinedDate: newUser.joinedDate };
       console.log("User registered" + data.Username);
       res.send(newUser);
+      res.end();
     }
   });
 });
@@ -87,6 +88,7 @@ app.post("/login", (req, res) => {
           console.log("User found");
           res.send(user);
           console.log(`found user: ${user}`);
+          res.end();
         } else {
           console.log("Wrong password");
           res.status(401).send("Wrong password");

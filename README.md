@@ -4,39 +4,19 @@
 
 Chriper is a short messaging client. Aka it's a twitter clone
 
-## Installation
-
-## Project status
-
 ## Project Setup
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-
-### Run Backend Server
-
-cd Backend
-npm run Server
+Backend/npm install
+frontend/npm install
 
 ### Setup Database Server
 
-docker-compose up
+backend/docker-compose up
+
+### Run Backend Server
+
+backend/npm run Server
+
+### Compile and Hot-Reload for Development
+
+frontend/npm run dev
