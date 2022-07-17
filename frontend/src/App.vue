@@ -35,6 +35,3 @@ const router = Router(),
   <router-view />
 </template>
 
-<style lang="scss">
-@import "css/App.scss";
-</style>

@@ -3,7 +3,7 @@ import store from "../store/index";
 import ViewHome from "../views/ViewHome.vue";
 import ViewRegister from "../views/ViewRegister.vue";
 import ViewProfile from "../views/ViewProfile.vue";
-import { user } from "../../backend/src/models/user";
+import { user } from "../../../backend/src/models/user";
 
 let l_router: Router | null = null;
 
