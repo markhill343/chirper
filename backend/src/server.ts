@@ -15,6 +15,7 @@ import { user } from "./models/user";
 import { chirp } from "./models/chirp";
 import { randomUUID } from 'crypto';
 
+//Define backend server
 const PORT = 8080,
   SERVER = `localhost:${PORT}`,
   app = express();
@@ -95,6 +96,7 @@ app.post("/login", (req, res) => {
     });
 });
 
+//function for only getting the basic user data
 app.post("/getuserwithoutdetail", (req, res) => {
   console.log(req.body);
   user.findOne({ username: req.body.username }, (err: any, user: any) => {
@@ -103,6 +105,7 @@ app.post("/getuserwithoutdetail", (req, res) => {
   });
 });
 
+//function for getting the user data with more details for the user profile
 app.post("/getuserwithdetails", (req, res) => {
   console.log("Retrieving user details for " + req.body.username);
   user
@@ -144,6 +147,7 @@ app.post("/getuserwithdetails", (req, res) => {
     });
 });
 
+//get the chirp from database
 app.post("/getthechirp", (req, res) => {
   chirp
     .findOne({ _id: req.body.chirpId })
@@ -180,6 +184,7 @@ app.post("/getthechirp", (req, res) => {
     });
 });
 
+//update username or user password
 app.post("/updateUser", (req, res) => {
   user.findOne({ username: req.body.Username }, (err, user) => {
     if (err) {
@@ -211,7 +216,7 @@ app.post("/updateUser", (req, res) => {
 });
 
 
-//new chirp
+// create a new chirp
 app.post("/newchirp", async (req, res) => {
   await chirp
     .create(req.body.chirpContent)
@@ -240,6 +245,7 @@ app.post("/newchirp", async (req, res) => {
     });
 });
 
+//add reply to a existing chirp
 app.post("/addreply", async (req, res) => {
   await chirp
     .create(req.body.chirpContent)
@@ -275,25 +281,7 @@ app.post("/addreply", async (req, res) => {
     });
 });
 
-app.post("/getChirpPage", (req, res) => {
-  const page = Number(req.body.page);
-  const s = (page - 1) * Number(req.body.chirpPerPage);
-  const l = Number(req.body.chirpPerPage);
-  chirp
-    .find({})
-    .sort({ createdDate: -1 })
-    .populate({
-      path: "author",
-    })
-    .exec((err, chirps) => {
-      if (err) throw err;
-      console.log(chirps);
-      res.send(chirps);
-      console.log(s, l);
-      console.log(req.body);
-    });
-});
-
+//follow or unfollow a user
 app.post("/followorunfollow", (req, res) => {
   const currentUserId = req.body.currentUserId;
   const userIdToFollow = req.body.userIdToFollow;
@@ -335,7 +323,8 @@ app.post("/followorunfollow", (req, res) => {
   res.status(200).send("success");
 });
 
-app.post("/removeChirp", async (req, res) => {
+//delete a chirp
+app.post("/removeChirp", async (req) => {
   const chirpId = req.body.chirpId;
 
   await chirp.findById(chirpId, (err: any, t: { isReply: any; parent: any; }) => {
@@ -349,12 +338,13 @@ app.post("/removeChirp", async (req, res) => {
       });
     }
   });
-  chirp.findOneAndDelete({ _id: chirpId }, (err: any, removed: any) => {
+  chirp.findOneAndDelete({ _id: chirpId }, (err: any) => {
     if (err) throw err;
   });
 });
 
-app.post("/likeorunlike", (req, res) => {
+//like or unlike a chirp
+app.post("/likeorunlike", (req) => {
   const currentUserId = req.body.currentUserId;
   const chirpId = req.body.chirpId;
   const like = req.body.like;
@@ -387,6 +377,7 @@ app.post("/likeorunlike", (req, res) => {
   });
 });
 
+//get bookmarks for user (chirps they bookedmarked)
 app.post("/getbookmarks", (req, res) => {
   user
     .findOne({ username: req.body.username })
@@ -413,5 +404,6 @@ app.post("/getbookmarks", (req, res) => {
     });
 });
 
+//starting the server
 app.listen(PORT);
 console.log(`Running on ${SERVER}`);

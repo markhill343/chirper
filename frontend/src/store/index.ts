@@ -4,16 +4,19 @@ const store = createStore({
   state: {
     isLoading: true,
 
+    //Not used yet
     loginUsernameModel: "",
     loginPasswordModel: "",
     loginErrors: null,
 
+    //Not used yet
     registerUsernameModel: "",
     registerEmailModel: "",
     registerPasswordModel: "",
     registerNameModel: "",
     registerErrors: "",
 
+    //Not used yet
     newInfos: {
       name: "",
       mail: "",
@@ -24,6 +27,7 @@ const store = createStore({
       bannerImage: "",
     },
 
+    //Not used yet
     newChirp: {
       text: "",
       image: "",
@@ -37,9 +41,9 @@ const store = createStore({
 
     userId: localStorage.getItem("userId"),
 
-    hashtagRegex: /(?:(?<=\s)|^)#(\w*[A-Za-z_ğüşıöçĞÜŞİÖÇ]+\w*)/gi,
+    hashtagRegex: /(?<=[\s>]|^)#(\w*[A-Za-z_]+\w*)\b(?!;)/gi,
 
-    usernameRegex: /(?:(?<=\s)|^)@(\w*[A-Za-z_ğüşıöçĞÜŞİÖÇ]+\w*)/gi,
+    usernameRegex: /(?<=[\s>]|^)@(\w*[A-Za-z_]+\w*)\b(?!;)/gi,
 
     repliedChirp: {},
 
