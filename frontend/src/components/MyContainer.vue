@@ -1,13 +1,12 @@
 <template>
   <h3>Sign up or Sign in</h3>
   <div v-if="newUser">
-    <register />
-  </div>
-  <div v-else>
     <login />
   </div>
-  <input type="checkbox" id="newUser" v-on:click="showLogin" /> Already have an
-  account?
+  <div v-else>
+    <register />
+  </div>
+  <input type="checkbox" id="newUser" v-on:click="showLogin" /> Register?
 </template>
 
 <script>

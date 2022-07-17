@@ -12,11 +12,17 @@ const router = Router(),
       },
       body: JSON.stringify(data),
     }).then(async (result) => {
+      if (result.status === 200) {
       const data = JSON.parse(await result.text());
       console.log("Success", data.Username);
       store.state.currentUser = data;
       store.state.userId = data.Username;
       router.push("/user");
+      } else if (result.status === 404) {
+        alert("Invalid username or password");
+      }else if (result.status === 500) {
+          alert('Server Error');
+      }
     });
   };
 
