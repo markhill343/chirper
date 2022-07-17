@@ -2,9 +2,10 @@
 import PressButton from "./PressButton.vue";
 import store from "../../store";
 
+let infoForChirp: any
+
 export default {
   name: "ChirpForm",
-  probs: ["infoForChirp", "is Detailed", "child"],
   components: {
     PressButton,
   },
@@ -21,7 +22,7 @@ export default {
     };
   },
   mounted() {
-    let chirpInfo = this.infoForChirp.text.replaceAll(
+    let chirpInfo = infoForChirp.text.replaceAll(
       store.state.hashtagRegex,
       "<a class='link' href=" + "'#'>#$1</a>"
     );
@@ -35,13 +36,13 @@ export default {
     toggleChirpActionVisible() {
       chirpAction = false;
       this.rechripAction = false;
-      this.chirpActionVisible = !this.chirpActionVisible;
+      this.chirpActionVisible = !chirpActionVisible;
       console.log("toggle action clicked");
     },
     toggleRechirpAction() {
-      this.chirpAction = false;
-      this.rechripAction = false;
-      this.rechripActionVisible = !this.rechripActionVisible;
+      chirpAction = false;
+      trechripAction = false;
+      rechripActionVisible = !rechripActionVisible;
       console.log("toggle ReChirp clicked");
     },
     toggleChirpActionList() {
@@ -76,8 +77,8 @@ export default {
       );
     },
     replyChirp() {
-      this.$store.state.replyChirp = this.infoForChirp;
-      this.$store.state.addChirpPopup = true;
+      store.state.replyChirp = infoForChirp;
+      store.state.addChirpPopup = true;
     },
   },
 };
