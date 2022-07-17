@@ -10,6 +10,7 @@ const testUser = {
   username: "peterlustig123",
   password: "123",
   email: ""}
+  const testChirpRemove = "1";
 
 
 const createNewChirp = async () => {
@@ -45,26 +46,22 @@ const logout = async () => {
   console.log("User logged out");
 };
 
-/*
-const unfollow = async () => {
-  const response = await fetch("http://localhost:8080/unfollow", {
+
+const delete1 = async () => {
+  const response = await fetch("http://localhost:8080/removeChirp", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(testChirpRemove),
   });
   if (response.status === 200) {
-    const data = JSON.parse(await response.text());
-    console.log("Success", data.username);
-    store.state.currentUser = data;
-    store.state.userId = data.username;
-    router.push("/user");
+    console.log("Chirp deleted");
   } else if (response.status === 500) {
     alert("Server Error");
   }
 };
-*/
+
 
 
 </script>
@@ -166,7 +163,7 @@ const unfollow = async () => {
         <div class="createNewChirp">
           <ChirperButton class="Button" text="Create new Chirp" @click="createNewChirp"/> 
         </div>
-          <ChirperButton class="Button" text="delete chirp"/> 
+          <ChirperButton class="Button" text="delete chirp" @click="delete1"/> 
           <FollowUnfollowButton></FollowUnfollowButton>
           <span>
             <ChirperButton class="Button"  text="logout" @click="logout"></ChirperButton>
