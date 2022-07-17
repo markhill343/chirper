@@ -1,15 +1,82 @@
 <script setup lang="ts">
 import PressButton from "../components/form/PressButton.vue";
 import ChirperButton from "../components/form/ChirperButton.vue";
-import Chirp from "../components/form/ChirpForm.vue";
 import FollowUnfollowButton from "../components/form/FollowUnfollowButton.vue";
 import store from "../store";
+import Router from "../router/index";
 
+const router = Router();
+const testUser = {
+  username: "peterlustig123",
+  password: "123",
+  email: ""}
+
+
+const createNewChirp = async () => {
+  console.log("create new chirp");
+  /*
+  const testData = { username: testUser.password, chirpContent:{
+                      text: "this is a test chirp",
+                      tweetImage: "https://picsum.photos/200/300",
+                      author: testUser.username}};
+  const data = { username:localStorage.getItem('userId'), chirpContent:{
+                  text:store.state.newChirp.text,
+                  tweetImage:store.state.newChirp.image,
+                  author: localStorage.getItem('userId')
+              },}
+  const response = await fetch("http://localhost:8080/chirps", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(testData),
+  });
+  if (response.status === 200) {
+    console.log("New Chirp created");
+  } else if (response.status === 500) {
+    alert("Server Error");
+  }
+  */
+};
+
+
+const logout = async () => {
+  store.state.currentUser = ''
+  store.state.userId = ''
+  router.push("/register");
+  console.log("User logged out");
+};
+
+/*
+const unfollow = async () => {
+  const response = await fetch("http://localhost:8080/unfollow", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.status === 200) {
+    const data = JSON.parse(await response.text());
+    console.log("Success", data.username);
+    store.state.currentUser = data;
+    store.state.userId = data.username;
+    router.push("/user");
+  } else if (response.status === 500) {
+    alert("Server Error");
+  }
+};
+*/
 
 
 </script>
 
 <style>
+
+.createNewChirp:hover{
+  color: green
+  transparent;
+}
 
 .photo-and-buttons{
   width: auto;
@@ -25,13 +92,6 @@ import store from "../store";
   justify-content: space-between;
 }
 
-.profile-img img{
-  width: 132px;
-  height: 132px;
-  border-radius: 66px;
-  padding: 0px;
-  margin: 0px;
-}
 
 .profile-section{
   padding: 0px 5px;
@@ -41,7 +101,6 @@ import store from "../store";
   border-top: 0px;
   border-bottom: 0px;
 }
-
 .profile-tabs{
   width: 100%;
   height: 50px;
@@ -62,7 +121,6 @@ import store from "../store";
   color: #1DA1F2;
   border-bottom: 2px solid #1DA1F2;
 }
-
 .a-profile-tab:nth-child(1){
   width: 24%;
 }
@@ -107,11 +165,13 @@ import store from "../store";
           v-if="store.state.userForProfile.username !== store.state.currentUser"
           class="profile-buttons"
         >
-          <ChirperButton> </ChirperButton>
-          <ChirperButton> </ChirperButton>
+        <div class="createNewChirp">
+          <ChirperButton class="Button" text="Create new Chirp" @clickEvent="createNewChirp"/> 
+        </div>
+          <ChirperButton text="delete chirp"> </ChirperButton>
           <FollowUnfollowButton></FollowUnfollowButton>
           <span>
-            <ChirperButton></ChirperButton>
+            <ChirperButton text="logout"></ChirperButton>
           </span>
         </span>
       </div>

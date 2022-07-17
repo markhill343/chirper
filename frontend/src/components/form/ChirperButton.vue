@@ -5,8 +5,17 @@ defineProps({
   text: { type: String, default: "Button" },
 });
 
-const emit = defineEmits(["clickEvent"]),
-  click = () => emit("clickEvent");
+
+const emit = defineEmits(["clickEvent"]);
+
+
+ const clickEvent = () => {
+    try {
+    emit('clickEvent');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 </script>
 
 <style scoped>
@@ -29,6 +38,6 @@ button:hover{
 
 <template>
   <div class="chirper-button-root">
-    <button @click="click">ChirperButton</button>
+    <button :value="label" class="Button" v-html="text" @click="clickEvent"></button>
   </div>
 </template>

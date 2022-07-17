@@ -27,7 +27,6 @@ const store = createStore({
       bannerImage: "",
     },
 
-    //Not used yet
     newChirp: {
       text: "",
       image: "",
@@ -51,9 +50,9 @@ const store = createStore({
 
     currentUser: {},
 
-    userForProfile: { username: String },
+    userForProfile: {} as any,
 
-    chirpForDetail: {},
+    chirpForDetail: {} as any,
 
     bookmarks: {},
 
