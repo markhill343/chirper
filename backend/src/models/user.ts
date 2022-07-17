@@ -19,7 +19,7 @@ const userSchema = new Schema({
   following: [{ type: Schema.Types.ObjectId, ref: "user" }],
   followers: [{ type: Schema.Types.ObjectId, ref: "user" }],
   chirps: [{ type: Schema.Types.ObjectId, ref: "chirp" }],
-  bookmarks:[{ type: Schema.Types.ObjectId, ref: 'chrip' }],
+  bookmarks:[{ type: Schema.Types.ObjectId, ref: 'chirp' }],
 });
 
 

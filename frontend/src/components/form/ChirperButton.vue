@@ -6,12 +6,12 @@ defineProps({
 });
 
 
-const emit = defineEmits(["clickEvent"]);
+const emit = defineEmits(["click"]);
 
 
- const clickEvent = () => {
+ const click = () => {
     try {
-    emit('clickEvent');
+    emit('click');
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +38,6 @@ button:hover{
 
 <template>
   <div class="chirper-button-root">
-    <button :value="label" class="Button" v-html="text" @click="clickEvent"></button>
+    <button :value="label" class="Button" v-html="text" @click="click"></button>
   </div>
 </template>

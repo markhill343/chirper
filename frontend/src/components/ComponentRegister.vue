@@ -43,7 +43,7 @@ const Name = ref(""),
       <li><input v-model="Username" placeholder="Username" /></li>
       <li><input v-model="Email" placeholder="Email" /></li>
       <li>
-        <input v-model="Password" placeholder="Password" />
+        <input v-model="Password" placeholder="Password" type="password"/>
       </li>
       <button type="submit" id="register" @click="register">Register</button>
     </ul>

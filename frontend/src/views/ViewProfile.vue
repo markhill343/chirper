@@ -14,9 +14,8 @@ const testUser = {
 
 const createNewChirp = async () => {
   console.log("create new chirp");
-  /*
-  const testData = { username: testUser.password, chirpContent:{
-                      text: "this is a test chirp",
+  const testData = { username: testUser.username, chirpContent:{
+                      text: "thisisatestchirp",
                       tweetImage: "https://picsum.photos/200/300",
                       author: testUser.username}};
   const data = { username:localStorage.getItem('userId'), chirpContent:{
@@ -24,7 +23,7 @@ const createNewChirp = async () => {
                   tweetImage:store.state.newChirp.image,
                   author: localStorage.getItem('userId')
               },}
-  const response = await fetch("http://localhost:8080/chirps", {
+  const response = await fetch("http://localhost:8080/newChirp", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,14 +35,13 @@ const createNewChirp = async () => {
   } else if (response.status === 500) {
     alert("Server Error");
   }
-  */
 };
 
 
 const logout = async () => {
   store.state.currentUser = ''
   store.state.userId = ''
-  router.push("/register");
+  router.push("/");
   console.log("User logged out");
 };
 
@@ -166,12 +164,12 @@ const unfollow = async () => {
           class="profile-buttons"
         >
         <div class="createNewChirp">
-          <ChirperButton class="Button" text="Create new Chirp" @clickEvent="createNewChirp"/> 
+          <ChirperButton class="Button" text="Create new Chirp" @click="createNewChirp"/> 
         </div>
-          <ChirperButton text="delete chirp"> </ChirperButton>
+          <ChirperButton class="Button" text="delete chirp"/> 
           <FollowUnfollowButton></FollowUnfollowButton>
           <span>
-            <ChirperButton text="logout"></ChirperButton>
+            <ChirperButton class="Button"  text="logout" @click="logout"></ChirperButton>
           </span>
         </span>
       </div>

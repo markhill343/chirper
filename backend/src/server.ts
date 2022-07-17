@@ -219,32 +219,24 @@ app.post("/updateUser", (req, res) => {
 
 
 // create a new chirp
-app.post("/newchirp", async (req, res) => {
-  await chirp
-    .create(req.body.chirpContent)
-    .then(async (newChirp) => {
-      await user.findOne(
-        { username: req.body.username },
-        async (err: any, currentUser: { chirps: mongoose.Types.ObjectId[]; save: () => any; }) => {
-          if (err) {
-            console.log(err);
-          }
-          await currentUser.chirps.push(newChirp._id);
-          await currentUser.save();
-          await chirp
-            .findOne({ _id: newChirp._id })
-            .populate("author")
-            .exec(async (err, result) => {
-              if (err) throw err;
-              await console.log(result);
-              await res.send(result);
-            });
-        }
-      );
-    })
-    .catch((err) => {
-      throw err;
-    });
+app.post("/newChirp", async (req, res) => {
+  console.log("New chirp request---------------------------------------");
+  const testUser = user.findOne({username: "peterlustig123"});
+  const newChirp = new chirp({
+    text: req.body.chirpContent.text,
+    chirpId: randomUUID(),
+    isReply: "false",
+    bio: "Generic Bio",
+  });
+
+  console.log("Creating chirp: " + newChirp.text);
+  newChirp.save();
+  newChirp.save(function (err) {
+      res.status(200);
+      console.log("Chirp created" + newChirp);
+      res.send(newChirp);
+  
+});
 });
 
 //add reply to a existing chirp
