@@ -21,7 +21,7 @@ const router = Router(),
       store.state.userId = data.Username;
       localStorage.setItem('userId', data.Username);
       console.log("incoming data from regsiter"+ data)
-      //router.push("/user");
+      router.push("/user");
       } else if (result.status === 500) {
           alert('Username already exists');
       }

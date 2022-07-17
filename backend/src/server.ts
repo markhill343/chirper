@@ -38,7 +38,7 @@ db.once("open", function () {
 // Define cors and body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use('*', cors());
 
 //Test function
 app.get("/", function (req, res) {

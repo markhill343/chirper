@@ -5,6 +5,7 @@ import store from "../store";
 
 const router = Router(),
   login = async () => {
+    try{
     const response = await fetch("http://localhost:8080/login", {
       method: "POST",
       headers: {
@@ -14,9 +15,9 @@ const router = Router(),
     }).then(async (result) => {
       if (result.status === 200) {
       const data = JSON.parse(await result.text());
-      console.log("Success", data.Username);
+      console.log("User " + data.username + " logged in");
       store.state.currentUser = data;
-      store.state.userId = data.Username;
+      store.state.userId = data.username;
       router.push("/user");
       } else if (result.status === 404) {
         alert("Invalid username or password");
@@ -24,6 +25,9 @@ const router = Router(),
           alert('Server Error');
       }
     });
+    }catch(e){
+      console.log(e);
+    }
   };
 
 const Username = ref(""),

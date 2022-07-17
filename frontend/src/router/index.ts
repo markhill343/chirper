@@ -43,6 +43,7 @@ const router = () => {
       meta: {
         title: "User",
       },
+      /*
       beforeEnter: async (to, next) => {
         console.log("Retrieving user details for " + store.state.userForProfile.username);
         if (store.state.userForProfile.username) {
@@ -86,6 +87,7 @@ const router = () => {
           next("next");
         }
       },
+      */
     },
   ];
 
