@@ -9,7 +9,23 @@ const emit = defineEmits(["clickEvent"]),
   click = () => emit("clickEvent");
 </script>
 
-<style scoped></style>
+<style scoped>
+button{
+  outline: none;
+  font-weight: bolder;
+  font-size: 17px;
+  transition: 300ms all;
+  cursor: pointer;
+  background: white;
+  color: #1da1f2;
+  border: 1px solid #1da1f2;
+}
+
+button:hover{
+  background-color: red;
+}
+
+</style>
 
 <template>
   <div class="chirper-button-root">

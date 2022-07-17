@@ -7,20 +7,6 @@ const followOrUnfollow = async (follow: boolean) => {
     userIdToFollow = store.state.userForProfile,
     data = { currentUserId, userIdToFollow, follow };
 
-  if (follow) {
-    store.state.currentUser.following.push(store.state.userForProfile._id);
-    store.state.userForProfile.followers.push(store.state.currentUser._id);
-  } else {
-    store.state.currentUser.following.splice(
-      store.state.currentUser.following.indexOf(store.state.userForProfile._id),
-      1
-    );
-    store.state.userForProfile.followers.splice(
-      store.state.userForProfile.followers.indexOf(store.state.currentUser._id),
-      1
-    );
-  }
-
   const response = await fetch("http://localhost:8080/followorunfollow", {
     method: "POST",
     headers: {
@@ -35,9 +21,48 @@ const followOrUnfollow = async (follow: boolean) => {
 
 <template>
   <div class="follow-unfollow-button-root">
-    <button @click="followOrUnfollow(false)">
+    <button @click="followOrUnfollow(true)">
       <span class="first">Following</span>
-      <span class="second">Follow</span>
+      <span class="second">unfollow</span>
     </button>
   </div>
 </template>
+
+
+<style scoped>
+
+.follow-unfollow-button-root button .second{
+  display: none;
+}
+
+.follow-unfollow-button-root button .second,
+.follow-unfollow-button-root button .first{
+  color: white;
+}
+
+.follow-unfollow-button-root button{
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  background: #1da1f2;
+  outline: none;
+  font-weight: bolder;
+  font-size: 17px;
+  transition: 300ms all;
+  cursor: pointer;
+  border: 0px;
+}
+
+.follow-unfollow-button-root button:hover{
+  background: #CA2055;
+}
+
+.follow-unfollow-button-root button:hover .first{
+  display: none;
+}
+
+.follow-unfollow-button-root button:hover .second{
+  display: block;
+}
+
+</style>
